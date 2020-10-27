@@ -1,0 +1,43 @@
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <TextView
+            android:id="@+id/txt_settings_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/title_editing_timer"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginTop="15dp"/>
+
+    <TextView
+            android:id="@+id/txt_settings_timer_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:textSize="50sp"/>
+
+    <include  layout="@layout/editing_fragment"
+            android:id="@+id/editing_layout_roundDuration" />
+
+    <include  layout="@layout/editing_fragment"
+            android:id="@+id/editing_layout_restDuration" />
+
+    <include  layout="@layout/editing_fragment"
+            android:id="@+id/editing_layout_roundQuantity" />
+
+    <include  layout="@layout/editing_fragment"
+            android:id="@+id/editing_layout_runUp" />
+
+    <include  layout="@layout/editing_fragment"
+            android:id="@+id/editing_layout_noticeOfEndRound" />
+
+    <include  layout="@layout/editing_fragment"
+            android:id="@+id/editing_layout_soundType" />
+
+</LinearLayout>

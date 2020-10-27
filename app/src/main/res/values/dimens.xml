@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textView_time_margin">5sp</dimen>
+    <dimen name="textView_time_size">50dp</dimen>
+    <dimen name="textView_name_of_time">20sp</dimen>
+    <dimen name="spinner_timer_name">50sp</dimen>
+</resources>
