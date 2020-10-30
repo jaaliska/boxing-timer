@@ -141,8 +141,13 @@ class EditingActivity : AppCompatActivity(), EditingView {
         )
     }
 
-    override fun showSoundTypeDialog(consumer: (TimerSoundType) -> Unit) {
-        TODO("Not yet implemented")
+    override fun showSoundTypeDialog(title: Int, sound: TimerSoundType, consumer: (TimerSoundType) -> Unit) {
+        myDialog.alertDialogForSound(
+            context = this,
+            title = title,
+            value = sound,
+            consumer = consumer
+        )
     }
 
     override fun showStringDialog(title: Int, string: String, consumer: (String) -> Unit) {

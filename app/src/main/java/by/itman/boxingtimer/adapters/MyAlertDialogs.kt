@@ -3,21 +3,19 @@ package by.itman.boxingtimer.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Build
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
+import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.DialogTitle
 import by.itman.boxingtimer.R
-import by.itman.boxingtimer.activities.EditingActivity
 import by.itman.boxingtimer.filters.MyTextWatcher
-import by.itman.boxingtimer.models.TimerModel
 import by.itman.boxingtimer.models.TimerSoundType
 import java.time.Duration
 
@@ -34,7 +32,7 @@ class MyAlertDialogs {
     @RequiresApi(Build.VERSION_CODES.O)
     fun alertDialogForDuration(
         context: Context,
-        title: Int,
+        @StringRes title: Int,
         time: Duration,
         consumer: (Duration) -> Unit
     ) {
@@ -75,7 +73,7 @@ class MyAlertDialogs {
     @RequiresApi(Build.VERSION_CODES.O)
     fun alertDialogForNumber(
         context: Context,
-        title: Int,
+        @StringRes title: Int,
         value: Int,
         consumer: (Int) -> Unit
     ) {
@@ -122,7 +120,7 @@ class MyAlertDialogs {
 
     fun alertDialogForString(
         context: Context,
-        title: Int,
+        @StringRes title: Int,
         string: String?,
         consumer: (String) -> Unit
     ) {
@@ -152,5 +150,48 @@ class MyAlertDialogs {
 
     }
 
+    fun alertDialogForSound(
+        context: Context,
+        title: Int,
+        value: TimerSoundType,
+        consumer: (TimerSoundType) -> Unit
+    ) {
+        var mPlayer: MediaPlayer? = null
+        val inflater: LayoutInflater = LayoutInflater.from(context)
+        val subView: View = inflater.inflate(R.layout.alert_dialog_sound, null)
+        val timerSoundTypes = TimerSoundType.values().toList()
+        val timerTitles = timerSoundTypes.map{ soundType -> TimerSoundType.getTitle(soundType)}
+        val listView: ListView = subView.findViewById(R.id.list_dialog_sound_choice)
+        listView.choiceMode = ListView.CHOICE_MODE_SINGLE
+        val adapter = ArrayAdapter(context, android.R.layout.simple_list_item_single_choice, timerTitles)
+        listView.adapter = adapter
+        listView.setItemChecked(timerSoundTypes.indexOf(value), true)
+        listView.setOnItemClickListener { adapterView: AdapterView<*>, view: View, position: Int, id: Long ->
+            val currentSound = timerSoundTypes[position]
+            mPlayer?.release()
+            mPlayer = MediaPlayer.create(context, TimerSoundType.getResource(currentSound))
+            mPlayer?.start()
+        }
 
+        @SuppressLint("RestrictedApi")
+        val dialogTitle = DialogTitle(context)
+        dialogTitle.setText(title)
+        dialogTitle.gravity = Gravity.CENTER
+        dialogTitle.textSize = 20F
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setCustomTitle(dialogTitle)
+            .setView(subView)
+            .setNegativeButton("Отмена") { dialogInterface: DialogInterface?, i: Int ->
+                mPlayer?.release()
+                mPlayer = null
+                return@setNegativeButton
+            }
+            .setPositiveButton("Ok") setNegativeButton@{ dialogInterface: DialogInterface?, i: Int ->
+                consumer(timerSoundTypes[listView.checkedItemPosition])
+                mPlayer?.release()
+                mPlayer = null
+            }
+        builder.create()
+        builder.show().window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+    }
 }

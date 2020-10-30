@@ -51,7 +51,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         setContentView(R.layout.activity_main)
 
         initializeDefaultPrefs()
-
         mImgButSettings = findViewById(R.id.imgBut_main_settings)
         mTxtRoundDuration = findViewById(R.id.txt_main_roundDuration)
         mTimeRoundDuration = findViewById(R.id.time_main_roundDuration)
@@ -171,21 +170,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateState() {
-    //    val roundDM: Long = currentModelTimer.roundDuration.toMinutes()
-    //    val roundDS: Long = currentModelTimer.roundDuration.seconds % 60
-    //    val restDM: Long = currentModelTimer.restDuration.toMinutes()
-    //    val restDS: Long = currentModelTimer.restDuration.seconds % 60
-
-
-
-    //    mTimeRestDuration.text = StringBuilder(
-    //        (if (restDM < 10) "0$restDM" else "$restDM") +
-    //                ":" + (if (restDS < 10) "0$restDS" else "$restDS")
-    //    )
-    //    mTimeRoundDuration.text = StringBuilder(
-    //        (if (roundDM < 10) "0${roundDM}" else "$roundDM") +
-    //                ":" + (if (roundDS < 10) "0$roundDS" else "$roundDS")
-    //    )
 
         mTimeRestDuration.text = myUtils.formatDuration(currentModelTimer.restDuration)
         mTimeRoundDuration.text = myUtils.formatDuration(currentModelTimer.roundDuration)

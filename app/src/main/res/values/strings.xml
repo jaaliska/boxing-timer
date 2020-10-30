@@ -42,7 +42,11 @@
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
-
+    <string name="timer_sound_gong_title">Gong</string>
+    <string name="timer_sound_low_gong_title">Low Gong</string>
+    <string name="timer_sound_great_gong_title">Great Gong</string>
+    <string name="timer_sound_bell_title">Bell</string>
+    <string name="timer_sound_warning_title">Warning</string>
 
 
 </resources>

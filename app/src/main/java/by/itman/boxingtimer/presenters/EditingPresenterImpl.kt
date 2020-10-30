@@ -98,9 +98,15 @@ class EditingPresenterImpl
                     }
                 )
             TimerField.SOUND_TYPE ->
-                view.showSoundTypeDialog {
-                    //todo SoundTypeDialog
-                }
+                view.showSoundTypeDialog(
+                    title = R.string.txt_title_name_soundType,
+                    sound = timer.soundType,
+                    consumer = {sound ->
+                        timer.soundType = sound
+                        timerProvider.save(timer)
+                        view.displayTimerFields(timerPresentation)
+                    }
+                )
         }
     }
 
