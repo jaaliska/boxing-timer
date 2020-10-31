@@ -39,6 +39,9 @@ android {
 }
 
 dependencies {
+    // A compile-only dependency to fix building Android projects with Dagger2 and JDK9+
+    compileOnly 'com.github.pengrad:jdk9-deps:1.0'
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.10"
     implementation "com.google.code.gson:gson:2.8.6"
