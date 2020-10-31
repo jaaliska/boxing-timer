@@ -40,7 +40,6 @@ class PrefsTimerProviderTests {
         // unique id has been generated
         assertNotSame(savedTimer.id, savedTimer2.id)
         assertTimersDataAreEqual(timer2, savedTimer2)
-        assertTrue(false)
     }
 
     @Test
