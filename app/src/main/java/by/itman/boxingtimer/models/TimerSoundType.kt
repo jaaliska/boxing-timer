@@ -1,7 +1,5 @@
 package by.itman.boxingtimer.models
 
-import android.content.res.Resources
-import android.provider.Settings.Global.getString
 import androidx.annotation.IdRes
 import by.itman.boxingtimer.App
 import by.itman.boxingtimer.R

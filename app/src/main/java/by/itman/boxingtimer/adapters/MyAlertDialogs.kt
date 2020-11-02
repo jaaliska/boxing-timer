@@ -66,7 +66,7 @@ class MyAlertDialogs {
                 consumer(Duration.ofSeconds(min * 60L + sec))
             }
         builder.create()
-        builder.show().window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+        builder.show()
     }
 
     //TODO отвалидировать входящий ноль
@@ -146,8 +146,7 @@ class MyAlertDialogs {
                 consumer(name)
             }
         builder.create()
-        builder.show().window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
-
+        builder.show()
     }
 
     fun alertDialogForSound(
@@ -192,6 +191,6 @@ class MyAlertDialogs {
                 mPlayer = null
             }
         builder.create()
-        builder.show().window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+        builder.show()
     }
 }

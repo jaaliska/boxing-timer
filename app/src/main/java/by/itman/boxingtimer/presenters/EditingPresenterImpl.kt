@@ -76,6 +76,7 @@ class EditingPresenterImpl
                         view.displayTimerFields(timerPresentation)
                     }
                 )
+
             TimerField.RUN_UP ->
                 view.showDurationDialog(
                     title = R.string.txt_title_name_runUp,
@@ -97,11 +98,12 @@ class EditingPresenterImpl
                         view.displayTimerFields(timerPresentation)
                     }
                 )
+
             TimerField.SOUND_TYPE ->
                 view.showSoundTypeDialog(
                     title = R.string.txt_title_name_soundType,
                     sound = timer.soundType,
-                    consumer = {sound ->
+                    consumer = { sound ->
                         timer.soundType = sound
                         timerProvider.save(timer)
                         view.displayTimerFields(timerPresentation)
