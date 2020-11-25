@@ -2,8 +2,12 @@ package by.itman.boxingtimer
 
 import android.content.Context
 import android.content.SharedPreferences
+import by.itman.boxingtimer.adapters.TimerManagerImpl
+import by.itman.boxingtimer.adapters.TimerManager
 import by.itman.boxingtimer.presenters.EditingPresenter
 import by.itman.boxingtimer.presenters.EditingPresenterImpl
+import by.itman.boxingtimer.presenters.RunPresenter
+import by.itman.boxingtimer.presenters.RunPresenterImpl
 import by.itman.boxingtimer.providers.PrefsTimerProvider
 import by.itman.boxingtimer.providers.TimerProvider
 import dagger.Binds
@@ -24,6 +28,14 @@ abstract class AbstractAppModule {
 
     @Binds
     abstract fun bindsEditionPresenter(editingPresenterImpl: EditingPresenterImpl): EditingPresenter
+
+    @Binds
+    abstract fun bindsRunPresenter(runPresenterImpl: RunPresenterImpl): RunPresenter
+
+    @Singleton
+    @Binds
+    abstract fun bindsTimerManager(timerManager: TimerManagerImpl): TimerManager
+
 }
 
 @InstallIn(ApplicationComponent::class)

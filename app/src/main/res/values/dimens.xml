@@ -4,4 +4,5 @@
     <dimen name="textView_time_size">50dp</dimen>
     <dimen name="textView_name_of_time">20sp</dimen>
     <dimen name="spinner_timer_name">50sp</dimen>
+    <dimen name="button_run">60sp</dimen>
 </resources>

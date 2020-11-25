@@ -16,6 +16,7 @@ data class TimerModel(
     var roundQuantity: Int,
     var runUp: Duration,
     var noticeOfEndRound: Duration,
+   // var noticeOfENdRest: Duration,
     internal var soundType: TimerSoundType
 ) {
 

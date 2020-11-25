@@ -122,11 +122,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                     updateState()
                 }
             )
-
         }
 
         mButtonStart.setOnClickListener {
-            //TODO переход на RunActivity
+            startActivity(Intent(applicationContext, RunActivity::class.java)
+                .putExtra("id", currentModelTimer.id))
         }
     }
 

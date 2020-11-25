@@ -75,6 +75,9 @@ dependencies {
     // Shared Preferences Mock
     testImplementation 'com.github.IvanShafran:shared-preferences-mock:1.0'
 
+    // MaterialProgressBar
+    implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
+
     //Dagger
   //  api 'com.google.dagger:dagger-android:2.15'
   //  api 'com.google.dagger:dagger-android-support:2.15' // if you use the support libraries

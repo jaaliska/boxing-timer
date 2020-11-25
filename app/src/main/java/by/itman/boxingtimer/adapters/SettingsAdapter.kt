@@ -2,6 +2,7 @@ package by.itman.boxingtimer.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,7 @@ class SettingsAdapter(
             val tm = getItem(position)
             if (tm != null) {
                 val intent = Intent(context, EditingActivity::class.java)
+                    .addFlags(FLAG_ACTIVITY_NEW_TASK)
                     .putExtra("id", tm.id)
                 startActivity(context, intent, null)
             }

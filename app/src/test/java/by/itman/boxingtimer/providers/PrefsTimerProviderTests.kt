@@ -146,7 +146,7 @@ class PrefsTimerProviderTests {
         catch (e: Throwable) {
             val retrievedTimers = provider.getAll()
             // provider still has 1 timer
-            assertEquals(retrievedTimers.size, 1)
+            assertEquals(1, retrievedTimers.size)
 
             // check timer is not corrupted
             val retrievedTimer = provider.getById(timer.id!!)
