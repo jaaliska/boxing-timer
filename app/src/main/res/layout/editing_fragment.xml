@@ -10,7 +10,7 @@
             android:layout_height="wrap_content"
             android:gravity="top|start"
             android:text="Время"
-            android:textSize="25dp" />
+            android:textSize="20dp" />
 
     <TextView
             android:id="@+id/txt_editing_value"
@@ -19,7 +19,7 @@
             android:layout_alignParentEnd="true"
             android:gravity="right|end"
             android:text="00:20"
-            android:textSize="50dp"/>
+            android:textSize="30dp"/>
 
 
 </RelativeLayout>

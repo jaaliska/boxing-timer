@@ -1,6 +1,5 @@
 package by.itman.boxingtimer.presenters
 
-import android.widget.Toast
 import by.itman.boxingtimer.R
 import by.itman.boxingtimer.models.TimerModel
 import by.itman.boxingtimer.providers.TimerProvider
@@ -8,8 +7,6 @@ import by.itman.boxingtimer.views.EditingView
 import by.itman.boxingtimer.views.TimerPresentation
 
 import moxy.MvpPresenter
-import java.lang.Exception
-import java.time.Duration
 import javax.inject.Inject
 
 
@@ -99,17 +96,61 @@ class EditingPresenterImpl
                     }
                 )
 
-            TimerField.SOUND_TYPE ->
+            TimerField.NOTICE_OF_END_REST ->
+                view.showDurationDialog(
+                    title = R.string.txt_title_name_noticeOfEndRest,
+                    time = timer.noticeOfEndRest,
+                    consumer = { duration ->
+                        timer.noticeOfEndRest = duration
+                        timerProvider.save(timer)
+                        view.displayTimerFields(timerPresentation)
+                    }
+                )
+
+
+            TimerField.SOUND_TYPE_OF_END_ROUND_NOTICE ->
                 view.showSoundTypeDialog(
-                    title = R.string.txt_title_name_soundType,
-                    sound = timer.soundType,
+                    title = R.string.txt_title_name_soundType_of_end_round_notice,
+                    sound = timer.soundTypeOfEndRoundNotice,
                     consumer = { sound ->
-                        timer.soundType = sound
+                        timer.soundTypeOfEndRoundNotice = sound
+                        timerProvider.save(timer)
+                        view.displayTimerFields(timerPresentation)
+                    }
+                )
+
+            TimerField.SOUND_TYPE_OF_END_REST_NOTICE ->
+                view.showSoundTypeDialog(
+                    title = R.string.txt_title_name_soundType_of_end_rest_notice,
+                    sound = timer.soundTypeOfEndRestNotice,
+                    consumer = { sound ->
+                        timer.soundTypeOfEndRestNotice = sound
+                        timerProvider.save(timer)
+                        view.displayTimerFields(timerPresentation)
+                    }
+                )
+
+            TimerField.SOUND_TYPE_OF_START_ROUND ->
+                view.showSoundTypeDialog(
+                    title = R.string.txt_title_name_soundType_of_start_round,
+                    sound = timer.soundTypeOfStartRound,
+                    consumer = { sound ->
+                        timer.soundTypeOfStartRound = sound
+                        timerProvider.save(timer)
+                        view.displayTimerFields(timerPresentation)
+                    }
+                )
+
+            TimerField.SOUND_TYPE_OF_START_REST ->
+                view.showSoundTypeDialog(
+                    title = R.string.txt_title_name_soundType_of_start_rest,
+                    sound = timer.soundTypeOfStartRest,
+                    consumer = { sound ->
+                        timer.soundTypeOfStartRest = sound
                         timerProvider.save(timer)
                         view.displayTimerFields(timerPresentation)
                     }
                 )
         }
     }
-
 }

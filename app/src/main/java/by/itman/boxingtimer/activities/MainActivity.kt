@@ -2,11 +2,9 @@ package by.itman.boxingtimer.activities
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import androidx.annotation.RequiresApi
 import by.itman.boxingtimer.R
 import by.itman.boxingtimer.adapters.MyAlertDialogs
 import by.itman.boxingtimer.models.TimerModel
@@ -45,7 +43,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     private val myUtils: MyUtils = MyUtils()
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -73,7 +70,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                 roundQuantity = 8,
                 runUp = Duration.ofSeconds(20),
                 noticeOfEndRound = Duration.ofSeconds(10),
-                soundType = TimerSoundType.GONG
+                noticeOfEndRest = Duration.ofSeconds(5),
+                soundTypeOfEndRestNotice = TimerSoundType.WARNING,
+                soundTypeOfEndRoundNotice = TimerSoundType.WARNING,
+                soundTypeOfStartRound = TimerSoundType.GONG,
+                soundTypeOfStartRest = TimerSoundType.GONG
             )
         }
         currentModelTimer = activeTimerModel.copy()
@@ -91,10 +92,10 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                 consumer = { duration ->
                     mTimeRoundDuration.text = myUtils.formatDuration(duration = duration)
                     currentModelTimer.roundDuration = duration
+                    timerProvider.save(currentModelTimer)
                     updateState()
                 }
             )
-
         }
 
         mTimeRestDuration.setOnClickListener {
@@ -108,7 +109,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                     updateState()
                 }
             )
-
         }
 
         mTimeRoundQuantity.setOnClickListener {
@@ -130,7 +130,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
         activeTimerModel = getActiveTimerModel()
@@ -139,14 +138,12 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         updateState()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onPause() {
         super.onPause()
         timerProvider.save(currentModelTimer)
         currentModelTimer.id?.let { setActiveTimerModel(it) }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun setSpinner() {
         val data: List<TimerModel> = timerProvider.getAll()
         val adapter: ArrayAdapter<TimerModel> = ArrayAdapter(this, R.layout.spinner_item, data)
@@ -168,7 +165,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun updateState() {
 
         mTimeRestDuration.text = myUtils.formatDuration(currentModelTimer.restDuration)
@@ -193,7 +189,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     private fun initializeDefaultPrefs() {
         if (!sharedPrefs.contains("defaults_initialized")) {
             timerProvider.save(
@@ -205,7 +201,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                     roundQuantity = 8,
                     runUp = Duration.ofSeconds(20),
                     noticeOfEndRound = Duration.ofSeconds(10),
-                    soundType = TimerSoundType.GONG
+                    noticeOfEndRest = Duration.ofSeconds(5),
+                    soundTypeOfEndRoundNotice = TimerSoundType.WARNING,
+                    soundTypeOfEndRestNotice = TimerSoundType.WARNING,
+                    soundTypeOfStartRound = TimerSoundType.GONG,
+                    soundTypeOfStartRest = TimerSoundType.GONG
                 )
             )
             timerProvider.save(
@@ -217,7 +217,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                     roundQuantity = 8,
                     runUp = Duration.ofSeconds(20),
                     noticeOfEndRound = Duration.ofSeconds(10),
-                    soundType = TimerSoundType.GONG
+                    noticeOfEndRest = Duration.ofSeconds(5),
+                    soundTypeOfEndRestNotice = TimerSoundType.WARNING,
+                    soundTypeOfEndRoundNotice = TimerSoundType.WARNING,
+                    soundTypeOfStartRound = TimerSoundType.GONG,
+                    soundTypeOfStartRest = TimerSoundType.GONG
                 )
             )
             timerProvider.save(
@@ -229,7 +233,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                     roundQuantity = 5,
                     runUp = Duration.ofSeconds(20),
                     noticeOfEndRound = Duration.ofSeconds(10),
-                    soundType = TimerSoundType.GONG
+                    noticeOfEndRest = Duration.ofSeconds(5),
+                    soundTypeOfEndRestNotice = TimerSoundType.WARNING,
+                    soundTypeOfEndRoundNotice = TimerSoundType.WARNING,
+                    soundTypeOfStartRound = TimerSoundType.GONG,
+                    soundTypeOfStartRest = TimerSoundType.GONG
                 )
             )
             timerProvider.save(
@@ -241,7 +249,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                     roundQuantity = 8,
                     runUp = Duration.ofSeconds(20),
                     noticeOfEndRound = Duration.ofSeconds(0),
-                    soundType = TimerSoundType.GONG
+                    noticeOfEndRest = Duration.ofSeconds(0),
+                    soundTypeOfEndRestNotice = TimerSoundType.WARNING,
+                    soundTypeOfEndRoundNotice = TimerSoundType.WARNING,
+                    soundTypeOfStartRound = TimerSoundType.GONG,
+                    soundTypeOfStartRest = TimerSoundType.GONG
                 )
             )
             sharedPrefs.edit().putBoolean("defaults_initialized", true).apply()

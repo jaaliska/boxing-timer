@@ -2,7 +2,6 @@ package by.itman.boxingtimer.presenters
 
 
 import by.itman.boxingtimer.adapters.TimerManager
-import by.itman.boxingtimer.adapters.TimerManagerImpl
 import by.itman.boxingtimer.models.*
 import by.itman.boxingtimer.providers.TimerProvider
 import by.itman.boxingtimer.views.RunView
@@ -25,16 +24,13 @@ class  RunPresenterImpl
         runView = view
         timerProvider.getById(timerId)?.let { timer = it }
         timerManager.subscribe(this)
+        timerManager.setTimer(timer)
         timerManager.startTimer()
 
-    //timerObservers.add(this)
-    //serviceInstance?.subscribe(this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
-    //serviceInstance?.unSubscribe(this)
     }
 
     override fun onTimerStart() {
@@ -46,7 +42,7 @@ class  RunPresenterImpl
     }
 
     override fun onTimerStop() {
-        TODO("Not yet implemented")
+        timerManager.stopTimer()
     }
 
     override fun onTimerFinished() {

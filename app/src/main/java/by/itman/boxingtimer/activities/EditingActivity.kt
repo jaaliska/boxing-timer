@@ -1,10 +1,8 @@
 package by.itman.boxingtimer.activities
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import by.itman.boxingtimer.R
 import by.itman.boxingtimer.adapters.MyAlertDialogs
@@ -50,7 +48,16 @@ class EditingActivity : AppCompatActivity(), EditingView {
         fieldLayoutsMap[TimerField.RUN_UP] = findViewById(R.id.editing_layout_runUp)
         fieldLayoutsMap[TimerField.NOTICE_OF_END_ROUND] =
             findViewById(R.id.editing_layout_noticeOfEndRound)
-        fieldLayoutsMap[TimerField.SOUND_TYPE] = findViewById(R.id.editing_layout_soundType)
+        fieldLayoutsMap[TimerField.NOTICE_OF_END_REST] =
+            findViewById(R.id.editing_layout_noticeOfEndRest)
+        fieldLayoutsMap[TimerField.SOUND_TYPE_OF_END_ROUND_NOTICE] =
+            findViewById(R.id.editing_layout_soundTypeOfEndRoundNotice)
+        fieldLayoutsMap[TimerField.SOUND_TYPE_OF_END_REST_NOTICE] =
+            findViewById(R.id.editing_layout_soundTypeOfEndRestNotice)
+        fieldLayoutsMap[TimerField.SOUND_TYPE_OF_START_ROUND] =
+            findViewById(R.id.editing_layout_soundTypeOfStartRound)
+        fieldLayoutsMap[TimerField.SOUND_TYPE_OF_START_REST] =
+            findViewById(R.id.editing_layout_soundTypeOfStartRest)
 
         fieldLayoutsMap.forEach { layout ->
             layout.value.setOnClickListener() {
@@ -65,7 +72,6 @@ class EditingActivity : AppCompatActivity(), EditingView {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun displayTimerFields(timerPresentation: TimerPresentation) {
         val nameField: TextView = fieldLayoutsMap[TimerField.NAME] as TextView
         nameField.text = timerPresentation.getName()
@@ -89,7 +95,26 @@ class EditingActivity : AppCompatActivity(), EditingView {
             TimerField.NOTICE_OF_END_ROUND,
             myUtils.formatDuration(timerPresentation.getNoticeOfEndRound())
         )
-        setFieldEditingValue(TimerField.SOUND_TYPE, timerPresentation.getSoundType().toString())
+        setFieldEditingValue(
+            TimerField.NOTICE_OF_END_REST,
+            myUtils.formatDuration(timerPresentation.getNoticeOfEndRest())
+        )
+        setFieldEditingValue(
+            TimerField.SOUND_TYPE_OF_END_ROUND_NOTICE,
+            timerPresentation.getSoundTypeOfEndRoundNotice().toString()
+        )
+        setFieldEditingValue(
+            TimerField.SOUND_TYPE_OF_END_REST_NOTICE,
+            timerPresentation.getSoundTypeOfEndRestNotice().toString()
+        )
+        setFieldEditingValue(
+            TimerField.SOUND_TYPE_OF_START_ROUND,
+            timerPresentation.getSoundTypeOfStartRound().toString()
+        )
+        setFieldEditingValue(
+            TimerField.SOUND_TYPE_OF_START_REST,
+            timerPresentation.getSoundTypeOfStartRest().toString()
+        )
     }
 
     private fun setFieldEditingValue(timerField: TimerField, value: String) {
@@ -97,7 +122,6 @@ class EditingActivity : AppCompatActivity(), EditingView {
             ?.text = value
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun showDurationDialog(
         title: Int,
         time: Duration,
@@ -111,7 +135,6 @@ class EditingActivity : AppCompatActivity(), EditingView {
         )
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun showNumberDialog(
         title: Int,
         number: Int,
@@ -150,6 +173,4 @@ class EditingActivity : AppCompatActivity(), EditingView {
             consumer = consumer
         )
     }
-
-
 }

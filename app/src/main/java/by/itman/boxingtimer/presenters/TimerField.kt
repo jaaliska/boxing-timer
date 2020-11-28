@@ -34,9 +34,31 @@ enum class TimerField {
             return App.applicationContext().resources.getString(R.string.txt_title_name_noticeOfEndRound)
         }
     },
-    SOUND_TYPE {
+    NOTICE_OF_END_REST {
         override fun getTitle(): String {
-            return App.applicationContext().resources.getString(R.string.txt_title_name_soundType)
+            return App.applicationContext().resources.getString(R.string.txt_title_name_noticeOfEndRest)
+        }
+    },
+
+    SOUND_TYPE_OF_END_ROUND_NOTICE {
+        override fun getTitle(): String {
+            return App.applicationContext().resources.getString(R.string.txt_title_name_soundType_of_end_round_notice)
+        }
+    },
+    SOUND_TYPE_OF_END_REST_NOTICE {
+        override fun getTitle(): String {
+            return App.applicationContext().resources.getString(R.string.txt_title_name_soundType_of_end_rest_notice)
+        }
+    },
+
+    SOUND_TYPE_OF_START_ROUND {
+        override fun getTitle(): String {
+            return App.applicationContext().resources.getString(R.string.txt_title_name_soundType_of_start_round)
+        }
+    },
+    SOUND_TYPE_OF_START_REST {
+        override fun getTitle(): String {
+            return App.applicationContext().resources.getString(R.string.txt_title_name_soundType_of_start_rest)
         }
     };
 

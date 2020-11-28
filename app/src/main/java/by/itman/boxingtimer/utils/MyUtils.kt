@@ -9,7 +9,6 @@ class MyUtils {
     /**
      * The method converts insert Duration to String like "02:00"
      */
-    @RequiresApi(Build.VERSION_CODES.O)
     fun formatDuration(duration: Duration): String {
         val min = duration.toMinutes()
         val sec = duration.seconds - min * 60

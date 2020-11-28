@@ -1,10 +1,8 @@
 package by.itman.boxingtimer.adapters
 
-import android.os.Build
-import android.os.CountDownTimer
 import android.os.SystemClock
 import android.util.Log
-import androidx.annotation.RequiresApi
+import by.itman.boxingtimer.models.TimerModel
 import by.itman.boxingtimer.models.TimerObserver
 import java.time.Duration
 import javax.inject.Inject
@@ -14,12 +12,12 @@ import javax.inject.Singleton
 class TimerManagerImpl @Inject constructor ():
     TimerManager {
 private lateinit var countDownTimer: AdvancedCountDownTimer
-    val timerObservers = mutableListOf<TimerObserver>()
+    private val timerObservers = mutableListOf<TimerObserver>()
+    private lateinit var actualTimer: TimerModel
 
     override fun startTimer() {
-        var t = SystemClock.elapsedRealtime()
-        countDownTimer = object : AdvancedCountDownTimer(100000, 1000, 10) {
-            @RequiresApi(Build.VERSION_CODES.O)
+        val t = SystemClock.elapsedRealtime()
+        countDownTimer = object : AdvancedCountDownTimer(actualTimer.roundDuration.toMillis(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 for (observer in timerObservers) {
                     observer.onTick(Duration.ofMillis(millisUntilFinished))
@@ -30,7 +28,10 @@ private lateinit var countDownTimer: AdvancedCountDownTimer
                 Log.i("timer finish", (SystemClock.elapsedRealtime() - t).toString())
             }
         }.start()
+    }
 
+    override fun setTimer(timer: TimerModel) {
+        actualTimer = timer
     }
 
     override fun subscribe(timerObserver: TimerObserver) {
@@ -41,4 +42,7 @@ private lateinit var countDownTimer: AdvancedCountDownTimer
         timerObservers.remove(timerObserver)
     }
 
+    override fun stopTimer() {
+        countDownTimer.cancel()
+    }
 }

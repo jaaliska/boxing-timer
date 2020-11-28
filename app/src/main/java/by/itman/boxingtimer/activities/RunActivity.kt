@@ -3,15 +3,12 @@ package by.itman.boxingtimer.activities
 
 import android.content.ComponentName
 import android.content.ServiceConnection
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import by.itman.boxingtimer.R
-import by.itman.boxingtimer.models.startInstance
 import by.itman.boxingtimer.presenters.RunPresenter
 import by.itman.boxingtimer.utils.MyUtils
 import by.itman.boxingtimer.views.RunView
@@ -43,7 +40,6 @@ class RunActivity : AppCompatActivity(), RunView, ServiceConnection {
         mTxtForExample = findViewById(R.id.txt_run_round_show)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setRunUpProgress(progress: Duration) {
         mTxtForExample.text = myUtils.formatDuration(progress)
 
@@ -91,5 +87,15 @@ class RunActivity : AppCompatActivity(), RunView, ServiceConnection {
 
     override fun onServiceDisconnected(p0: ComponentName?) {
         TODO("Not yet implemented")
+    }
+
+    override fun onPause() {
+        Log.i("RunActivity", "onPause")
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        runPresenter.onTimerStop()
+        super.onDestroy()
     }
 }

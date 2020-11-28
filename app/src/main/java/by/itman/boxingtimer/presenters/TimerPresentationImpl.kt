@@ -30,8 +30,23 @@ class TimerPresentationImpl(private val timer: TimerModel): TimerPresentation  {
         return timer.noticeOfEndRound
     }
 
-    override fun getSoundType(): TimerSoundType {
-        return timer.soundType
+    override fun getNoticeOfEndRest(): Duration {
+        return timer.noticeOfEndRest
     }
 
+    override fun getSoundTypeOfEndRoundNotice(): TimerSoundType {
+        return timer.soundTypeOfEndRoundNotice
+    }
+
+    override fun getSoundTypeOfEndRestNotice(): TimerSoundType {
+        return timer.soundTypeOfEndRestNotice
+    }
+
+    override fun getSoundTypeOfStartRound(): TimerSoundType {
+        return timer.soundTypeOfStartRound
+    }
+
+    override fun getSoundTypeOfStartRest(): TimerSoundType {
+        return timer.soundTypeOfStartRest
+    }
 }

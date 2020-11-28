@@ -19,7 +19,11 @@
     <string name="txt_title_name_roundQuantity">Количество раундов</string>
     <string name="txt_title_name_runUp">Время на подготовку</string>
     <string name="txt_title_name_noticeOfEndRound">Оповещение об окончании раунда</string>
-    <string name="txt_title_name_soundType">Звуковой сигнал</string>
+    <string name="txt_title_name_noticeOfEndRest">Оповещение об окончании отдыха</string>
+    <string name="txt_title_name_soundType_of_end_round_notice">Звук предупреждения окончания раунда</string>
+    <string name="txt_title_name_soundType_of_end_rest_notice">Звук предупреждения окончания отдыха</string>
+    <string name="txt_title_name_soundType_of_start_round">Звук начала раунда</string>
+    <string name="txt_title_name_soundType_of_start_rest">Звук начала отдыха</string>
 
 
     <string name="sync_header">Sync</string>

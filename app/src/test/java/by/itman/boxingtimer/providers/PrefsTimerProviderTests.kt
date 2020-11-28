@@ -167,6 +167,10 @@ class PrefsTimerProviderTests {
             Random.nextInt(),
             Duration.ofMinutes(Random.nextLong(1, 10)),
             Duration.ofMinutes(Random.nextLong(1, 10)),
+            Duration.ofMinutes(Random.nextLong(1, 10)),
+            getRandomTimerSoundType(),
+            getRandomTimerSoundType(),
+            getRandomTimerSoundType(),
             getRandomTimerSoundType()
         )
     }
@@ -191,6 +195,11 @@ class PrefsTimerProviderTests {
         assertEquals(expected.roundQuantity, actual.roundQuantity)
         assertEquals(expected.runUp, actual.runUp)
         assertEquals(expected.noticeOfEndRound, actual.noticeOfEndRound)
-        assertEquals(expected.soundType, actual.soundType)
+        assertEquals(expected.noticeOfEndRest, actual.noticeOfEndRest)
+        assertEquals(expected.soundTypeOfStartRound, actual.soundTypeOfStartRound)
+        assertEquals(expected.soundTypeOfStartRest, actual.soundTypeOfStartRest)
+        assertEquals(expected.soundTypeOfEndRoundNotice, actual.soundTypeOfEndRoundNotice)
+        assertEquals(expected.soundTypeOfEndRestNotice, actual.soundTypeOfEndRestNotice)
+
     }
 }

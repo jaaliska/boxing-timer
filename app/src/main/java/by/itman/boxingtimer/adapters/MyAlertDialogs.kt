@@ -29,7 +29,7 @@ class MyAlertDialogs {
      * @param time initial value of Duration.  It's necessary to draw a dialog.
      * @param consumer adopt new value of Duration
      */
-    @RequiresApi(Build.VERSION_CODES.O)
+
     fun alertDialogForDuration(
         context: Context,
         @StringRes title: Int,
@@ -70,7 +70,7 @@ class MyAlertDialogs {
     }
 
     //TODO отвалидировать входящий ноль
-    @RequiresApi(Build.VERSION_CODES.O)
+
     fun alertDialogForNumber(
         context: Context,
         @StringRes title: Int,

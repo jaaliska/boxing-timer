@@ -2,17 +2,10 @@
 
 package by.itman.boxingtimer.activities
 
-import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.*
 import android.widget.*
-import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.DialogTitle
 import by.itman.boxingtimer.R
 import by.itman.boxingtimer.adapters.MyAlertDialogs
 import by.itman.boxingtimer.adapters.SettingsAdapter
@@ -32,7 +25,6 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var mCreateTimer: Button
     private val myDialog: MyAlertDialogs = MyAlertDialogs()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -59,7 +51,11 @@ class SettingsActivity : AppCompatActivity() {
                             roundQuantity = 8,
                             runUp = Duration.ofSeconds(20),
                             noticeOfEndRound = Duration.ofSeconds(10),
-                            soundType = TimerSoundType.GONG
+                            noticeOfEndRest = Duration.ofSeconds(5),
+                            soundTypeOfEndRestNotice = TimerSoundType.WARNING,
+                            soundTypeOfEndRoundNotice = TimerSoundType.WARNING,
+                            soundTypeOfStartRound = TimerSoundType.GONG,
+                            soundTypeOfStartRest = TimerSoundType.GONG
                         )
                     )
                     startActivity(

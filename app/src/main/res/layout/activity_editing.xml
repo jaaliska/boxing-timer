@@ -38,6 +38,19 @@
             android:id="@+id/editing_layout_noticeOfEndRound" />
 
     <include  layout="@layout/editing_fragment"
-            android:id="@+id/editing_layout_soundType" />
+            android:id="@+id/editing_layout_noticeOfEndRest" />
+
+    <include  layout="@layout/editing_fragment"
+            android:id="@+id/editing_layout_soundTypeOfStartRound" />
+
+    <include  layout="@layout/editing_fragment"
+            android:id="@+id/editing_layout_soundTypeOfStartRest" />
+
+    <include  layout="@layout/editing_fragment"
+            android:id="@+id/editing_layout_soundTypeOfEndRoundNotice" />
+
+    <include  layout="@layout/editing_fragment"
+            android:id="@+id/editing_layout_soundTypeOfEndRestNotice" />
+
 
 </LinearLayout>

@@ -1,11 +1,11 @@
 package by.itman.boxingtimer.providers
 
 import android.content.SharedPreferences
-import android.os.Build
-import androidx.annotation.RequiresApi
 import by.itman.boxingtimer.models.TimerModel
+import by.itman.boxingtimer.models.TimerSoundType
 import com.google.gson.Gson
 import java.lang.IndexOutOfBoundsException
+import java.time.Duration
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,12 +16,10 @@ class PrefsTimerProvider @Inject constructor (private val prefs: SharedPreferenc
 
     private val gson: Gson = Gson()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun getAll(): List<TimerModel> {
         return getTimerIds().mapNotNull { id -> getById(id) }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun getById(i: Int): TimerModel? {
         val timerJson = prefs.getString(getTimerPrefKey(i), null)
         return if (timerJson != null) deserializeTimer(timerJson) else null
@@ -46,7 +44,11 @@ class PrefsTimerProvider @Inject constructor (private val prefs: SharedPreferenc
                 timer.roundQuantity,
                 timer.runUp,
                 timer.noticeOfEndRound,
-                timer.soundType
+                timer.noticeOfEndRest,
+                timer.soundTypeOfEndRoundNotice,
+                timer.soundTypeOfEndRestNotice,
+                timer.soundTypeOfStartRound,
+                timer.soundTypeOfStartRest
             )
             val editor = prefs.edit()
             val timerJson = serializeTimer(newTimer)
@@ -80,11 +82,11 @@ class PrefsTimerProvider @Inject constructor (private val prefs: SharedPreferenc
     }
 
     private fun serializeTimer(timer: TimerModel): String {
-        return gson.toJson(timer)
+        return gson.toJson(TimerModelWithoutDuration((timer)))
     }
 
     private fun deserializeTimer(string: String): TimerModel {
-        return gson.fromJson(string, TimerModel::class.java)
+        return gson.fromJson(string, TimerModelWithoutDuration::class.java).getTimerModel()
     }
 
     private fun getTimerIds(): MutableList<Int> {
@@ -103,5 +105,38 @@ class PrefsTimerProvider @Inject constructor (private val prefs: SharedPreferenc
         val ids = getTimerIds()
         val maxId = ids.max()
         return if (maxId == null) 1 else maxId + 1
+    }
+
+
+    data class TimerModelWithoutDuration(val timer: TimerModel) {
+        private val id: Int? = timer.id
+        private val name: String = timer.name
+        private val roundDuration: Long = timer.roundDuration.toMillis()
+        private val restDuration: Long = timer.restDuration.toMillis()
+        private val roundQuantity: Int = timer.roundQuantity
+        private val runUp: Long = timer.runUp.toMillis()
+        private val noticeOfEndRound: Long = timer.noticeOfEndRound.toMillis()
+        private val noticeOfEndRest: Long = timer.noticeOfEndRest.toMillis()
+        private val soundTypeOfNoticeOfEndRound: TimerSoundType = timer.soundTypeOfEndRoundNotice
+        private val soundTypeOfNoticeOfEndRest: TimerSoundType = timer.soundTypeOfEndRestNotice
+        private val soundTypeOfStartRound: TimerSoundType = timer.soundTypeOfStartRound
+        private val soundTypeOfStartRest: TimerSoundType = timer.soundTypeOfStartRest
+
+        fun getTimerModel(): TimerModel {
+            return TimerModel(
+                id,
+                name,
+                Duration.ofMillis(roundDuration),
+                Duration.ofMillis(restDuration),
+                roundQuantity,
+                Duration.ofMillis(runUp),
+                Duration.ofMillis(noticeOfEndRound),
+                Duration.ofMillis(noticeOfEndRest),
+                soundTypeOfNoticeOfEndRound,
+                soundTypeOfNoticeOfEndRest,
+                soundTypeOfStartRound,
+                soundTypeOfStartRest
+            )
+        }
     }
 }

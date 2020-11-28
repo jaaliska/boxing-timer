@@ -10,5 +10,9 @@ interface TimerPresentation {
     fun getRoundQuantity(): Int
     fun getRunUp(): Duration
     fun getNoticeOfEndRound(): Duration
-    fun getSoundType(): TimerSoundType
+    fun getNoticeOfEndRest(): Duration
+    fun getSoundTypeOfEndRoundNotice(): TimerSoundType
+    fun getSoundTypeOfEndRestNotice(): TimerSoundType
+    fun getSoundTypeOfStartRound(): TimerSoundType
+    fun getSoundTypeOfStartRest(): TimerSoundType
 }
