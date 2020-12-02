@@ -25,7 +25,7 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
     private var isTimerPaused: Boolean = false
     private var roundCount by Delegates.notNull<Int>()
     private var currentRoundNumber = 1
-    val soundNoticePlayback: SoundNoticePlayback = SoundNoticePlayback(context, this)
+    //val soundNoticePlayback: SoundNoticePlayback = SoundNoticePlayback(context, this)
 
 
     override fun run(timer: TimerPresentation) {
