@@ -3,26 +3,26 @@
         package="by.itman.boxingtimer">
 
     <application
-            android:name=".App"
+            android:name=".di.App"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".activities.RunActivity" />
-        <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".ui.run.RunActivity" />
+        <activity android:name=".ui.settings.SettingsActivity" />
         <activity
-                android:name=".activities.EditingActivity"
+                android:name=".ui.editing.EditingActivity"
                 android:label="@string/title_activity_settings" />
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".models.TimerServiceImpl" />
+        <service android:name=".service.TimerServiceImpl" />
     </application>
 
 </manifest>

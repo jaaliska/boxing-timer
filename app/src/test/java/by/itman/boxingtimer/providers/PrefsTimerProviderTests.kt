@@ -1,6 +1,7 @@
 package by.itman.boxingtimer.providers
 
 import android.content.SharedPreferences
+import by.itman.boxingtimer.data.PrefsTimerProvider
 import by.itman.boxingtimer.models.TimerModel
 import by.itman.boxingtimer.models.TimerSoundType
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder

@@ -47,6 +47,9 @@
     <string name="timer_sound_great_gong_title">Great Gong</string>
     <string name="timer_sound_bell_title">Bell</string>
     <string name="timer_sound_warning_title">Warning</string>
+    <string name="restart">restart</string>
+    <string name="pause">pause</string>
+    <string name="resume">resume</string>
 
 
 </resources>

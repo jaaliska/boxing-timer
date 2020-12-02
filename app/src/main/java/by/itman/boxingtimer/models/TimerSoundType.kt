@@ -1,7 +1,7 @@
 package by.itman.boxingtimer.models
 
 import androidx.annotation.IdRes
-import by.itman.boxingtimer.App
+import by.itman.boxingtimer.di.App
 import by.itman.boxingtimer.R
 
 enum class TimerSoundType {
