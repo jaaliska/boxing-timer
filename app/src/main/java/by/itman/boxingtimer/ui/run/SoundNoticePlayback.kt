@@ -3,7 +3,6 @@ package by.itman.boxingtimer.ui.run
 import android.content.Context
 import android.media.MediaPlayer
 import android.util.Log
-import by.itman.boxingtimer.R
 import by.itman.boxingtimer.models.TimerPresentation
 import by.itman.boxingtimer.models.TimerSoundType
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -68,7 +67,7 @@ class SoundNoticePlayback @Inject constructor(
     override fun onWarnAboutToEndRound() {
         mPlayer?.release()
         mPlayer = MediaPlayer.create(context,
-            TimerSoundType.getResource(actualTimer.getSoundTypeOfStartRound()))
+            TimerSoundType.getResource(actualTimer.getSoundTypeOfEndRoundNotice()))
         mPlayer!!.start()
         Log.i(tag, "onWarnAboutToEndRound")
     }

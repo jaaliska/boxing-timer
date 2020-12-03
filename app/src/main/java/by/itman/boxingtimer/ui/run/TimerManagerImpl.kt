@@ -1,17 +1,13 @@
 package by.itman.boxingtimer.ui.run
 
 import android.content.Context
-import android.media.MediaPlayer
 import android.os.SystemClock
 import android.util.Log
 import by.itman.boxingtimer.utils.AdvancedCountDownTimer
-import by.itman.boxingtimer.models.TimerSoundType
 import by.itman.boxingtimer.models.TimerPresentation
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.time.Duration
-import java.util.function.Consumer
 import javax.inject.Inject
-import javax.inject.Singleton
 import kotlin.properties.Delegates
 
 class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Context) :
@@ -25,7 +21,7 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
     private var isTimerPaused: Boolean = false
     private var roundCount by Delegates.notNull<Int>()
     private var currentRoundNumber = 1
-    //val soundNoticePlayback: SoundNoticePlayback = SoundNoticePlayback(context, this)
+    val soundNoticePlayback: SoundNoticePlayback = SoundNoticePlayback(context, this)
 
 
     override fun run(timer: TimerPresentation) {
@@ -56,7 +52,7 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
     private fun startRunUp() {
         timerState = TimerState.REST
         timerObservers.forEach { observer -> observer.onRunUp(timer = actualTimer) }
-        countDownTimer = startTimer(actualTimer.getRunUp())
+        countDownTimer = startTimer(actualTimer.getRunUp(), null)
         Log.i(tag, "timer runUp")
 
     }
@@ -66,18 +62,26 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
         timerObservers.forEach { observer ->
             observer.onRoundStart(roundNumber = currentRoundNumber)
         }
-        countDownTimer = startTimer(actualTimer.getRoundDuration())
+        val noticeTime = (actualTimer.getNoticeOfEndRound().seconds).toInt()
+        val noticeOfEndInSec: Int? = if (noticeTime == 0) null else noticeTime
+        countDownTimer = startTimer(
+            actualTimer.getRoundDuration(), noticeOfEndInSec)
         Log.i(tag, "timer startRound")
     }
 
     private fun startRest() {
         timerState = TimerState.REST
         timerObservers.forEach { observer -> observer.onRestStart() }
-        countDownTimer = startTimer(actualTimer.getRestDuration())
+        val noticeTime = (actualTimer.getNoticeOfEndRound().seconds).toInt()
+        val noticeOfEndInSec: Int? = if (noticeTime == 0) null else noticeTime
+        countDownTimer = startTimer(
+            actualTimer.getRestDuration(),
+            noticeOfEndInSec
+        )
         Log.i(tag, "timer startRest")
     }
 
-    private fun startTimer(millis: Duration): AdvancedCountDownTimer {
+    private fun startTimer(millis: Duration, noticeOfEndInSec: Int?): AdvancedCountDownTimer {
         val t = SystemClock.elapsedRealtime()
         countDownTimer = object : AdvancedCountDownTimer(millis.toMillis() + 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -85,16 +89,7 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
                     onFinish()
                     this.cancel()
                 }
-                if (Duration.ofMillis(millisUntilFinished) == actualTimer.getNoticeOfEndRound()) {
-                    timerObservers.forEach { observer ->
-                        observer.onWarnAboutToEndRound()
-                    }
-                }
-                if (Duration.ofMillis(millisUntilFinished) == actualTimer.getNoticeOfEndRest()) {
-                    timerObservers.forEach { observer ->
-                        observer.onWarnAboutToEndRest()
-                    }
-                }
+                if ((millisUntilFinished/1000).toInt() == noticeOfEndInSec) startSoundNotice()
                 timerObservers.forEach { observer ->
                     observer.onCountDownTick(Duration.ofMillis(millisUntilFinished))
                 }
@@ -107,6 +102,15 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
             }
         }.start()
         return countDownTimer
+    }
+
+    fun startSoundNotice() {
+        if (timerState == TimerState.ROUND) {
+            timerObservers.forEach { observer -> observer.onWarnAboutToEndRound() }
+        }
+        if (timerState == TimerState.REST) {
+            timerObservers.forEach { observer -> observer.onWarnAboutToEndRest() }
+        }
     }
 
 
@@ -136,6 +140,7 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
 
     override fun stop() {
         countDownTimer.cancel()
+        currentRoundNumber = 1
     }
 
     override fun getState(roundState: String, roundCount: Int, roundNumber: Int) {
