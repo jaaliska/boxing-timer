@@ -8,7 +8,7 @@ import android.os.SystemClock;
 /**
  * @see android.os.CountDownTimer
  * Accurate version of Android CountDownTimer taking into account time message is staying in
- * message queue
+ * the message queue
  */
 public abstract class AccurateCountDownTimer {
     /**
@@ -28,7 +28,7 @@ public abstract class AccurateCountDownTimer {
      */
     private boolean mCancelled = false;
 
-    private long mEnqueuedAt = 0;
+    private long mExpectedTickAt = 0;
 
     /**
      * @param millisInFuture The number of millis in the future from the call
@@ -59,8 +59,9 @@ public abstract class AccurateCountDownTimer {
             onFinish();
             return this;
         }
-        mEnqueuedAt = SystemClock.elapsedRealtime();
-        mStopTimeInFuture = mEnqueuedAt + mMillisInFuture;
+        // expect handle function called without delay
+        mExpectedTickAt = SystemClock.elapsedRealtime();
+        mStopTimeInFuture = mExpectedTickAt + mMillisInFuture;
         mHandler.sendMessage(mHandler.obtainMessage(MSG));
         return this;
     }
@@ -91,8 +92,8 @@ public abstract class AccurateCountDownTimer {
                     onFinish();
                 } else {
                     onTick(millisLeft);
-                    // take into account time staying in queue + user's onTick taking time to execute
-                    long lastTickDuration = SystemClock.elapsedRealtime() - mEnqueuedAt;
+                    // take into account looper delay + user's onTick taking time to execute
+                    long lastTickDuration = SystemClock.elapsedRealtime() - mExpectedTickAt;
                     long delay;
                     if (millisLeft < mCountdownInterval) {
                         // just delay until done
@@ -106,7 +107,7 @@ public abstract class AccurateCountDownTimer {
                         // complete, skip to next interval
                         while (delay < 0) delay += mCountdownInterval;
                     }
-                    mEnqueuedAt = SystemClock.elapsedRealtime();
+                    mExpectedTickAt = SystemClock.elapsedRealtime() + delay;
                     sendMessageDelayed(obtainMessage(MSG), delay);
                 }
             }
