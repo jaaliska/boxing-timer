@@ -81,11 +81,6 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
         }
     }
 
- //   override fun startTimer() {
- //       isTimerPaused = false
- //       timerState = TimerState.ROUND
- //   }
-
     override fun showPause() {
         isTimerPaused = true
         updateButtons()
@@ -112,10 +107,13 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
         mTxtTimerStatus.text = "Отдых"
     }
 
-    override fun warnBeforeRoundEnd() {}
+    override fun warnOfEndRound() {}
+
+    override fun warnOfEndRest() {}
 
     override fun finishTimer() {
         startActivity(Intent(applicationContext, MainActivity::class.java))
+        finish()
     }
 
 
@@ -125,7 +123,7 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
     }
 
     override fun onDestroy() {
-        runPresenter.onTimerStop()
+        runPresenter.onTimerFinished()
         Log.i("RunActivity", "onDestroy")
         super.onDestroy()
     }

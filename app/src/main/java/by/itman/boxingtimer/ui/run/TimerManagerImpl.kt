@@ -8,8 +8,10 @@ import by.itman.boxingtimer.models.TimerPresentation
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.time.Duration
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.properties.Delegates
 
+@Singleton
 class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Context) :
     TimerManager {
 
@@ -27,7 +29,7 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
     override fun run(timer: TimerPresentation) {
         actualTimer = timer
         roundCount = actualTimer.getRoundQuantity()
-        Log.i("timer run", timer.toString())
+        Log.i(tag,"timer run")
         startRunUp()
     }
 
@@ -106,10 +108,12 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
 
     fun startSoundNotice() {
         if (timerState == TimerState.ROUND) {
-            timerObservers.forEach { observer -> observer.onWarnAboutToEndRound() }
+            timerObservers.forEach { observer -> observer.onNoticeOfEndRound() }
+            Log.i(tag,"onNoticeAboutToEndRound")
         }
         if (timerState == TimerState.REST) {
-            timerObservers.forEach { observer -> observer.onWarnAboutToEndRest() }
+            timerObservers.forEach { observer -> observer.onNoticeOfEndRest() }
+            Log.i(tag,"onNoticeAboutToEndRest")
         }
     }
 
@@ -117,16 +121,19 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
     override fun pause() {
         isTimerPaused = true
         countDownTimer.pause()
+        timerObservers.forEach { observer -> observer.onPauseTimer() }
     }
 
     override fun resume() {
         isTimerPaused = false
         countDownTimer.resume()
+        timerObservers.forEach { observer -> observer.onResumeTimer() }
     }
 
     override fun restart() {
         isTimerPaused = false
         countDownTimer.restart()
+        timerObservers.forEach { observer -> observer.onRestartTimer() }
     }
 
     override fun subscribe(timerObserver: TimerObserver) {
@@ -138,12 +145,10 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
     }
 
 
-    override fun stop() {
+    override fun finish() {
         countDownTimer.cancel()
         currentRoundNumber = 1
-    }
-
-    override fun getState(roundState: String, roundCount: Int, roundNumber: Int) {
-        TODO("Not yet implemented")
+        timerObservers.forEach { observer -> observer.onTimerFinished() }
+        Log.i(tag,"finish")
     }
 }

@@ -56,7 +56,7 @@ class SoundNoticePlayback @Inject constructor(
     override fun onRestartTimer() {
     }
 
-    override fun onWarnAboutToEndRest() {
+    override fun onNoticeOfEndRest() {
         mPlayer?.release()
         mPlayer = MediaPlayer.create(context,
             TimerSoundType.getResource(actualTimer.getSoundTypeOfEndRestNotice()))
@@ -64,7 +64,7 @@ class SoundNoticePlayback @Inject constructor(
         Log.i(tag, "onWarnAboutToEndRest")
     }
 
-    override fun onWarnAboutToEndRound() {
+    override fun onNoticeOfEndRound() {
         mPlayer?.release()
         mPlayer = MediaPlayer.create(context,
             TimerSoundType.getResource(actualTimer.getSoundTypeOfEndRoundNotice()))

@@ -4,7 +4,6 @@ import by.itman.boxingtimer.models.TimerPresentation
 import java.time.Duration
 
 interface TimerObserver {
-    
     fun onCountDownTick(time: Duration)
     fun onRunUp(timer: TimerPresentation)
     fun onRoundStart(roundNumber: Int)
@@ -12,7 +11,7 @@ interface TimerObserver {
     fun onPauseTimer()
     fun onResumeTimer()
     fun onRestartTimer()
-    fun onWarnAboutToEndRest()
-    fun onWarnAboutToEndRound()
+    fun onNoticeOfEndRest()
+    fun onNoticeOfEndRound()
     fun onTimerFinished()
 }

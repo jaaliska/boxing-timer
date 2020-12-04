@@ -10,12 +10,12 @@ import java.time.Duration
 interface RunView: MvpView {
     fun setupRunUp(duration: Duration)
     fun setOnTickProgress(progress: Duration)
- //   fun startTimer()
     fun showPause()
     fun showRestart()
     fun showResume()
     fun startRound(roundCount: Int, roundNumber: Int)
     fun startRest()
-    fun warnBeforeRoundEnd()
+    fun warnOfEndRound()
+    fun warnOfEndRest()
     fun finishTimer()
 }

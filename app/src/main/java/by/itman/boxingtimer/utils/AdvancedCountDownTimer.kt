@@ -1,8 +1,8 @@
 package by.itman.boxingtimer.utils
 
-import android.os.CountDownTimer
 import android.os.SystemClock
 import android.util.Log
+import com.github.cardinalby.accuratecountdowntimer.AccurateCountDownTimer
 
 abstract class AdvancedCountDownTimer(
     var millisInFuture: Long,
@@ -13,7 +13,7 @@ abstract class AdvancedCountDownTimer(
     }
 
     @Volatile
-    private var cdTimer: CountDownTimer? = null
+    private var cdTimer: AccurateCountDownTimer? = null
     private var pausedWithMillsUntilFinish: Long = millisInFuture
     private var startTimeStamp: Long = 0L
 
@@ -38,7 +38,7 @@ abstract class AdvancedCountDownTimer(
     private fun createInternalTimer(millisUntilFinished: Long) {
         startTimeStamp = SystemClock.elapsedRealtime()
         state = TimerState.STARTED
-        cdTimer = object: CountDownTimer(
+        cdTimer = object: AccurateCountDownTimer(
             millisUntilFinished,
             countDownInterval
         ) {

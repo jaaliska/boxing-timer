@@ -14,7 +14,7 @@ class  RunPresenterImpl
 @Inject constructor(
     private val timerProvider: TimerProvider,
     private val timerManager: TimerManager
-) : MvpPresenter<RunView>(), RunPresenter, TimerObserver {
+) : MvpPresenter<RunView>(), RunPresenter {
 
     private val tag = "RunPresenter"
     private lateinit var runView: RunView
@@ -29,11 +29,27 @@ class  RunPresenterImpl
             ?: throw ExceptionInInitializerError("TimerModel with id $timerId return null")
         roundCount = timer.roundQuantity
         currentRoundNumber = roundCount
-        timerManager.subscribe(this)
+        timerManager.subscribe(TimerObserverForPresenter())
     }
 
     override fun runTimer() {
         timerManager.run(TimerPresentationImpl(timer))
+    }
+
+    override fun onTimerPause() {
+        timerManager.pause()
+    }
+
+    override fun onTimerResume() {
+        timerManager.resume()
+    }
+
+    override fun onTimerRestart() {
+        timerManager.restart()
+    }
+
+    override fun onTimerFinished() {
+        timerManager.finish()
     }
 
     override fun onDestroy() {
@@ -41,68 +57,46 @@ class  RunPresenterImpl
         super.onDestroy()
     }
 
-//    override fun onTimerStart() {
-//        runView.startTimer()
-//    }
+    inner class TimerObserverForPresenter: TimerObserver {
+        override fun onCountDownTick(time: Duration) {
+            runView.setOnTickProgress(time)
+        }
 
-    override fun onTimerPause() {
-        timerManager.pause()
-        runView.showPause()
-    }
+        override fun onRunUp(timer: TimerPresentation) {
+            runView.setupRunUp(timer.getRunUp())
+        }
 
-    override fun onTimerResume() {
-        timerManager.resume()
-        runView.showResume()
-    }
+        override fun onRoundStart(roundNumber: Int) {
+            currentRoundNumber = roundNumber
+            runView.startRound(roundCount, roundNumber)
+        }
 
-    override fun onTimerRestart() {
-        timerManager.restart()
-        runView.showRestart()
-    }
+        override fun onRestStart() {
+            runView.startRest()
+        }
 
-    override fun onTimerStop() {
-        timerManager.stop()
-    }
+        override fun onPauseTimer() {
+            runView.showPause()
+        }
 
-    override fun onTimerFinished() {
-        runView.finishTimer()
-    }
+        override fun onResumeTimer() {
+            runView.showResume()
+        }
 
-    override fun onCountDownTick(time: Duration) {
-        runView.setOnTickProgress(time)
-    }
+        override fun onRestartTimer() {
+            runView.showRestart()
+        }
 
-    override fun onRunUp(timer: TimerPresentation) {
-        runView.setupRunUp(timer.getRunUp())
-    }
+        override fun onNoticeOfEndRest() {
+            runView.warnOfEndRest()
+        }
 
-    override fun onRestStart() {
-        runView.startRest()
-    }
+        override fun onNoticeOfEndRound() {
+            runView.warnOfEndRound()
+        }
 
-    override fun onRoundStart(roundNumber: Int) {
-        currentRoundNumber = roundNumber
-        runView.startRound(roundCount, roundNumber)
-
-    }
-
-    override fun onPauseTimer() {
-
-    }
-
-    override fun onResumeTimer() {
-
-    }
-
-    override fun onRestartTimer() {
-
-    }
-
-    override fun onWarnAboutToEndRest() {
-
-    }
-
-    override fun onWarnAboutToEndRound() {
-
+        override fun onTimerFinished() {
+            runView.finishTimer()
+        }
     }
 }
