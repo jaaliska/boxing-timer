@@ -41,7 +41,6 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
                 startRest()
                 currentRoundNumber += 1
             }
-
         } else if (currentRoundNumber == roundCount) {
             startRound()
             currentRoundNumber += 1
@@ -106,6 +105,7 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
         return countDownTimer
     }
 
+    //todo fix bug with sound
     fun startSoundNotice() {
         if (timerState == TimerState.ROUND) {
             timerObservers.forEach { observer -> observer.onNoticeOfEndRound() }

@@ -1,19 +1,23 @@
 package by.itman.boxingtimer.ui.run
 
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PowerManager
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import by.itman.boxingtimer.R
 import by.itman.boxingtimer.ui.main.MainActivity
 import by.itman.boxingtimer.utils.MyUtils
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Duration
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
@@ -39,6 +43,10 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
             ?: throw ExceptionInInitializerError("Id of ModelTimer can't be null")
         runPresenter.init(this, id)
         runPresenter.runTimer() // todo: if first time
+      //  val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
+      //  val wl = pm.newWakeLock(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, "TimerManager: RunActivity work")//pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag")
+      //  wl.acquire()
+      //  wl.release()
     }
 
     private fun initialiseView() {
@@ -112,7 +120,6 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
     override fun warnOfEndRest() {}
 
     override fun finishTimer() {
-        startActivity(Intent(applicationContext, MainActivity::class.java))
         finish()
     }
 
@@ -120,6 +127,10 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
     override fun onPause() {
         Log.i("RunActivity", "onPause")
         super.onPause()
+    }
+
+    override fun onBackPressed() {
+        runPresenter.onExitByBackButton(context = this)
     }
 
     override fun onDestroy() {

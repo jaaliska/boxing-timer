@@ -10,7 +10,6 @@
     <string name="button_main_start">START</string>
     <string name="txt_main_change_timer">Выбор таймера:</string>
     <string name="title_editing_timer">Настройки таймера</string>
-    <string name="title_activity_settings">Что-то здесь</string>
     <string name="txt_editing_timer_name">Введите название таймера</string>
 
     <!-- Fields names of Timer -->
@@ -51,5 +50,8 @@
     <string name="pause">pause</string>
     <string name="resume">resume</string>
 
+    <!-- Strings for dialogs -->
+    <string name="txt_sittings_dialog_remove">Удалить таймер?</string>
+    <string name="txt_run_dialog_exit">Завершить тренировку?</string>
 
 </resources>

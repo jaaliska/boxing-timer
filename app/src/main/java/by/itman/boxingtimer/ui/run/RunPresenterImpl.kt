@@ -1,22 +1,28 @@
 package by.itman.boxingtimer.ui.run
 
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.util.Log
-import by.itman.boxingtimer.models.*
+import by.itman.boxingtimer.R
 import by.itman.boxingtimer.data.TimerProvider
-import by.itman.boxingtimer.models.TimerPresentationImpl
+import by.itman.boxingtimer.models.*
+import by.itman.boxingtimer.utils.MyAlertDialogs
 import moxy.MvpPresenter
 import java.time.Duration
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
-class  RunPresenterImpl
+
+class RunPresenterImpl
 @Inject constructor(
     private val timerProvider: TimerProvider,
     private val timerManager: TimerManager
 ) : MvpPresenter<RunView>(), RunPresenter {
 
     private val tag = "RunPresenter"
+    private val myDialog = MyAlertDialogs()
     private lateinit var runView: RunView
     private lateinit var timer: TimerModel
     private var roundCount by Delegates.notNull<Int>()
@@ -52,12 +58,19 @@ class  RunPresenterImpl
         timerManager.finish()
     }
 
+    override fun onExitByBackButton(context: Context) {
+        myDialog.alertDialogForActionVerification(context = context,
+            title = R.string.txt_run_dialog_exit,
+            consumer = { runView.finishTimer() }
+        )
+    }
+
     override fun onDestroy() {
         Log.i(tag, "onDestroy")
         super.onDestroy()
     }
 
-    inner class TimerObserverForPresenter: TimerObserver {
+    inner class TimerObserverForPresenter : TimerObserver {
         override fun onCountDownTick(time: Duration) {
             runView.setOnTickProgress(time)
         }

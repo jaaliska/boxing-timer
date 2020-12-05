@@ -1,5 +1,6 @@
 package by.itman.boxingtimer.ui.settings
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
@@ -14,6 +15,7 @@ import by.itman.boxingtimer.R
 import by.itman.boxingtimer.ui.editing.EditingActivity
 import by.itman.boxingtimer.models.TimerModel
 import by.itman.boxingtimer.data.TimerProvider
+import by.itman.boxingtimer.utils.MyAlertDialogs
 
 
 class SettingsAdapter(
@@ -23,6 +25,8 @@ class SettingsAdapter(
     val timerProvider: TimerProvider
 ) :
     ArrayAdapter<TimerModel>(context, resource, data) {
+
+    private val myDialog: MyAlertDialogs = MyAlertDialogs()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view: View
@@ -47,12 +51,17 @@ class SettingsAdapter(
 
         val removeButton: Button = view.findViewById(R.id.button_settings_fragment_remove)
         removeButton.setOnClickListener {
-            val tm = getItem(position)
-            if (tm != null) {
-                //TODO AlertDialog
-                timerProvider.remove(tm)
-                remove(tm)
-            }
+            myDialog.alertDialogForActionVerification(
+                context = context,
+                title = R.string.txt_sittings_dialog_remove,
+                consumer = {
+                    val tm = getItem(position)
+                    if (tm != null) {
+                        timerProvider.remove(tm)
+                        remove(tm)
+                    }
+                }
+            )
         }
         return view
     }

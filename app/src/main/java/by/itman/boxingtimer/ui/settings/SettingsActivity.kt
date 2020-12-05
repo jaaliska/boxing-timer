@@ -32,7 +32,7 @@ class SettingsActivity : AppCompatActivity() {
         mListSettings = findViewById(R.id.list_timers_settings)
         mCreateTimer = findViewById(R.id.button_new_timer_settings)
 
-        val adapter = SettingsAdapter(applicationContext, R.layout.settings_fragment, data,
+        val adapter = SettingsAdapter(this, R.layout.settings_fragment, data,
             timerProvider = timerProvider)
         mListSettings.adapter = adapter
 
@@ -50,8 +50,8 @@ class SettingsActivity : AppCompatActivity() {
                             restDuration =  Duration.ofSeconds(60),
                             roundQuantity = 8,
                             runUp = Duration.ofSeconds(20),
-                            noticeOfEndRound = Duration.ofSeconds(10),
-                            noticeOfEndRest = Duration.ofSeconds(5),
+                            noticeOfEndRound = Duration.ofSeconds(30),
+                            noticeOfEndRest = Duration.ofSeconds(10),
                             soundTypeOfEndRestNotice = TimerSoundType.WARNING,
                             soundTypeOfEndRoundNotice = TimerSoundType.WARNING,
                             soundTypeOfStartRound = TimerSoundType.GONG,

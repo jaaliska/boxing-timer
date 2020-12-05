@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.media.MediaPlayer
-import android.os.Build
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -189,6 +188,28 @@ class MyAlertDialogs {
                 consumer(timerSoundTypes[listView.checkedItemPosition])
                 mPlayer?.release()
                 mPlayer = null
+            }
+        builder.create()
+        builder.show()
+    }
+
+    fun alertDialogForActionVerification(
+        context: Context,
+        @StringRes title: Int,
+        consumer: (Boolean) -> Unit
+    ) {
+        @SuppressLint("RestrictedApi")
+        val dialogTitle = DialogTitle(context)
+        dialogTitle.setText(title)
+        dialogTitle.gravity = Gravity.CENTER
+        dialogTitle.textSize = 20F
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setCustomTitle(dialogTitle)
+            .setNegativeButton("Отмена") { dialogInterface: DialogInterface?, i: Int ->
+                return@setNegativeButton
+            }
+            .setPositiveButton("Ok") { dialogInterface: DialogInterface?, i: Int ->
+                consumer(true)
             }
         builder.create()
         builder.show()
