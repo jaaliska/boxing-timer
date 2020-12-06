@@ -7,6 +7,8 @@ import by.itman.boxingtimer.ui.editing.EditingPresenterImpl
 import by.itman.boxingtimer.data.PrefsTimerProvider
 import by.itman.boxingtimer.data.TimerProvider
 import by.itman.boxingtimer.ui.run.*
+import by.itman.boxingtimer.ui.settings.SettingsPresenter
+import by.itman.boxingtimer.ui.settings.SettingsPresenterImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -23,6 +25,9 @@ abstract class AbstractAppModule {
     @Singleton
     @Binds
     abstract fun bindsTimerProvider(timerProvider: PrefsTimerProvider): TimerProvider
+
+    @Binds
+    abstract fun bindsSettingsPresenter(settingsPresenterImpl: SettingsPresenterImpl): SettingsPresenter
 
     @Binds
     abstract fun bindsEditionPresenter(editingPresenterImpl: EditingPresenterImpl): EditingPresenter
