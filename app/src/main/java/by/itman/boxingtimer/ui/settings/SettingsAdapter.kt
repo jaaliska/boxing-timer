@@ -1,6 +1,5 @@
 package by.itman.boxingtimer.ui.settings
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK

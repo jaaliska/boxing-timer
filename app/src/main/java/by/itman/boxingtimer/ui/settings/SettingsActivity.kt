@@ -1,8 +1,7 @@
-
-
 package by.itman.boxingtimer.ui.settings
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
@@ -17,12 +16,14 @@ import java.time.Duration
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity(), SettingsView {
     private lateinit var data: List<TimerModel>
+
     @Inject
     lateinit var timerProvider: TimerProvider
+
     private lateinit var mListSettings: ListView
-    private lateinit var mCreateTimer: Button
+    private lateinit var mButCreateTimer: Button
     private val myDialog: MyAlertDialogs = MyAlertDialogs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,24 +31,26 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
         data = timerProvider.getAll()
         mListSettings = findViewById(R.id.list_timers_settings)
-        mCreateTimer = findViewById(R.id.button_new_timer_settings)
+        mButCreateTimer = findViewById(R.id.button_new_timer_settings)
 
-        val adapter = SettingsAdapter(this, R.layout.settings_fragment, data,
-            timerProvider = timerProvider)
+        val adapter = SettingsAdapter(
+            this, R.layout.settings_fragment, data,
+            timerProvider = timerProvider
+        )
         mListSettings.adapter = adapter
 
-        mCreateTimer.setOnClickListener {
+        mButCreateTimer.setOnClickListener {
             myDialog.alertDialogForString(
                 context = this,
                 title = R.string.txt_editing_timer_name,
                 string = null,
-                consumer = {string ->
+                consumer = { string ->
                     val tm: TimerModel = timerProvider.save(
                         TimerModel(
                             id = null,
                             name = string,
                             roundDuration = Duration.ofSeconds(180),
-                            restDuration =  Duration.ofSeconds(60),
+                            restDuration = Duration.ofSeconds(60),
                             roundQuantity = 8,
                             runUp = Duration.ofSeconds(20),
                             noticeOfEndRound = Duration.ofSeconds(30),
@@ -58,11 +61,23 @@ class SettingsActivity : AppCompatActivity() {
                             soundTypeOfStartRest = TimerSoundType.GONG
                         )
                     )
+                    timerProvider.setPositionActiveTimerForSpinner(timerProvider.getAll().size - 1)
                     startActivity(
                         Intent(applicationContext, EditingActivity::class.java)
-                            .putExtra("id", tm.id))
+                            .putExtra("id", tm.id)
+                    )
                 }
             )
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        data = timerProvider.getAll()
+        val adapter = SettingsAdapter(
+            this, R.layout.settings_fragment, data,
+            timerProvider = timerProvider
+        )
+        mListSettings.adapter = adapter
     }
 }

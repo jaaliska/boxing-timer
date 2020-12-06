@@ -74,6 +74,27 @@ class PrefsTimerProvider @Inject constructor (private val prefs: SharedPreferenc
         editor.apply()
     }
 
+    override fun setActiveTimer(id: Int) {
+        prefs.edit().putInt("active_timer_model", id).apply()
+    }
+
+    override fun getActiveTimer(): TimerModel {
+        val timerId = prefs.getInt("active_timer_model", 0)
+        return if (timerId == 0 || getById(timerId) == null) {
+            getAll()[0]
+        } else {
+            getById(timerId)!!
+        }
+    }
+
+    override fun setPositionActiveTimerForSpinner(id: Int) {
+        prefs.edit().putInt("position_active_timer_for_spinner", id).apply()
+    }
+
+    override fun getPositionActiveTimerForSpinner(): Int {
+        return prefs.getInt("position_active_timer_for_spinner", 0)
+    }
+
     private fun isTimerExist(id: Int): Boolean {
         return prefs.contains(getTimerPrefKey(id))
     }
@@ -106,6 +127,76 @@ class PrefsTimerProvider @Inject constructor (private val prefs: SharedPreferenc
         val ids = getTimerIds()
         val maxId = ids.max()
         return if (maxId == null) 1 else maxId + 1
+    }
+
+    override fun initializeDefaultTimers() {
+        if (!prefs.contains("defaults_initialized")) {
+            save(
+                TimerModel(
+                    id = null,
+                    name = "Бокс",
+                    roundDuration = Duration.ofSeconds(180),
+                    restDuration = Duration.ofSeconds(60),
+                    roundQuantity = 8,
+                    runUp = Duration.ofSeconds(20),
+                    noticeOfEndRound = Duration.ofSeconds(30),
+                    noticeOfEndRest = Duration.ofSeconds(10),
+                    soundTypeOfEndRoundNotice = TimerSoundType.WARNING,
+                    soundTypeOfEndRestNotice = TimerSoundType.WARNING,
+                    soundTypeOfStartRound = TimerSoundType.GONG,
+                    soundTypeOfStartRest = TimerSoundType.GONG
+                )
+            )
+            save(
+                TimerModel(
+                    id = null,
+                    name = "Лёгкий бокс",
+                    roundDuration = Duration.ofSeconds(120),
+                    restDuration = Duration.ofSeconds(60),
+                    roundQuantity = 8,
+                    runUp = Duration.ofSeconds(20),
+                    noticeOfEndRound = Duration.ofSeconds(30),
+                    noticeOfEndRest = Duration.ofSeconds(10),
+                    soundTypeOfEndRestNotice = TimerSoundType.WARNING,
+                    soundTypeOfEndRoundNotice = TimerSoundType.WARNING,
+                    soundTypeOfStartRound = TimerSoundType.GONG,
+                    soundTypeOfStartRest = TimerSoundType.GONG
+                )
+            )
+            save(
+                TimerModel(
+                    id = null,
+                    name = "ММА",
+                    roundDuration = Duration.ofSeconds(300),
+                    restDuration = Duration.ofSeconds(60),
+                    roundQuantity = 5,
+                    runUp = Duration.ofSeconds(20),
+                    noticeOfEndRound = Duration.ofSeconds(30),
+                    noticeOfEndRest = Duration.ofSeconds(10),
+                    soundTypeOfEndRestNotice = TimerSoundType.WARNING,
+                    soundTypeOfEndRoundNotice = TimerSoundType.WARNING,
+                    soundTypeOfStartRound = TimerSoundType.GONG,
+                    soundTypeOfStartRest = TimerSoundType.GONG
+                )
+            )
+            save(
+                TimerModel(
+                    id = null,
+                    name = "Табата",
+                    roundDuration = Duration.ofSeconds(20),
+                    restDuration = Duration.ofSeconds(10),
+                    roundQuantity = 8,
+                    runUp = Duration.ofSeconds(20),
+                    noticeOfEndRound = Duration.ofSeconds(0),
+                    noticeOfEndRest = Duration.ofSeconds(0),
+                    soundTypeOfEndRestNotice = TimerSoundType.WARNING,
+                    soundTypeOfEndRoundNotice = TimerSoundType.WARNING,
+                    soundTypeOfStartRound = TimerSoundType.GONG,
+                    soundTypeOfStartRest = TimerSoundType.GONG
+                )
+            )
+            prefs.edit().putBoolean("defaults_initialized", true).apply()
+        }
     }
 
 

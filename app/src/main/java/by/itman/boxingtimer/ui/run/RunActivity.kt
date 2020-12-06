@@ -1,19 +1,14 @@
 package by.itman.boxingtimer.ui.run
 
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.os.PowerManager
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import by.itman.boxingtimer.R
-import by.itman.boxingtimer.ui.main.MainActivity
-import by.itman.boxingtimer.utils.MyUtils
+import by.itman.boxingtimer.utils.timerFormat
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Duration
 import javax.inject.Inject
@@ -30,7 +25,6 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
     private lateinit var mButRestart: Button
     private lateinit var mButPause: Button
     private lateinit var mButResume: Button
-    private val myUtils = MyUtils()
     private var timerState: TimerState =  TimerState.RUN_UP
     private var isTimerPaused: Boolean = false
 
@@ -42,11 +36,7 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
         val id = arguments?.getInt("id")
             ?: throw ExceptionInInitializerError("Id of ModelTimer can't be null")
         runPresenter.init(this, id)
-        runPresenter.runTimer() // todo: if first time
-      //  val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
-      //  val wl = pm.newWakeLock(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, "TimerManager: RunActivity work")//pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag")
-      //  wl.acquire()
-      //  wl.release()
+        runPresenter.runTimer()
     }
 
     private fun initialiseView() {
@@ -70,7 +60,7 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
     }
 
     override fun setOnTickProgress(progress: Duration) {
-        mTxtCountTime.text = myUtils.formatDuration(progress)
+        mTxtCountTime.text = progress.timerFormat()
     }
 
     override fun setupRunUp(duration: Duration) {

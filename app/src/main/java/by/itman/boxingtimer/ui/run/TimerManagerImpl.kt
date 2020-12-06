@@ -5,7 +5,6 @@ import android.os.SystemClock
 import android.util.Log
 import by.itman.boxingtimer.utils.AdvancedCountDownTimer
 import by.itman.boxingtimer.models.TimerPresentation
-import by.itman.boxingtimer.utils.MyUtils
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.time.Duration
 import javax.inject.Inject

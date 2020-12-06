@@ -8,8 +8,8 @@ import by.itman.boxingtimer.R
 import by.itman.boxingtimer.utils.MyAlertDialogs
 import by.itman.boxingtimer.models.TimerSoundType
 import by.itman.boxingtimer.models.TimerField
-import by.itman.boxingtimer.utils.MyUtils
 import by.itman.boxingtimer.models.TimerPresentation
+import by.itman.boxingtimer.utils.timerFormat
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Duration
 import java.util.*
@@ -22,7 +22,6 @@ class EditingActivity : AppCompatActivity(), EditingView {
     @Inject
     lateinit var editingPresenter: EditingPresenter
     private val myDialog: MyAlertDialogs = MyAlertDialogs()
-    private val myUtils: MyUtils = MyUtils()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,11 +74,11 @@ class EditingActivity : AppCompatActivity(), EditingView {
         nameField.text = timerPresentation.getName()
         setFieldEditingValue(
             TimerField.ROUND_DURATION,
-            myUtils.formatDuration(timerPresentation.getRoundDuration())
+            timerPresentation.getRoundDuration().timerFormat()
         )
         setFieldEditingValue(
             TimerField.REST_DURATION,
-            myUtils.formatDuration(timerPresentation.getRestDuration())
+            timerPresentation.getRestDuration().timerFormat()
         )
         setFieldEditingValue(
             TimerField.ROUND_QUANTITY,
@@ -87,15 +86,15 @@ class EditingActivity : AppCompatActivity(), EditingView {
         )
         setFieldEditingValue(
             TimerField.RUN_UP,
-            myUtils.formatDuration(timerPresentation.getRunUp())
+            timerPresentation.getRunUp().timerFormat()
         )
         setFieldEditingValue(
             TimerField.NOTICE_OF_END_ROUND,
-            myUtils.formatDuration(timerPresentation.getNoticeOfEndRound())
+            timerPresentation.getNoticeOfEndRound().timerFormat()
         )
         setFieldEditingValue(
             TimerField.NOTICE_OF_END_REST,
-            myUtils.formatDuration(timerPresentation.getNoticeOfEndRest())
+            timerPresentation.getNoticeOfEndRest().timerFormat()
         )
         setFieldEditingValue(
             TimerField.SOUND_TYPE_OF_END_ROUND_NOTICE,
