@@ -5,6 +5,7 @@ import android.os.SystemClock
 import android.util.Log
 import by.itman.boxingtimer.utils.AdvancedCountDownTimer
 import by.itman.boxingtimer.models.TimerPresentation
+import by.itman.boxingtimer.utils.MyUtils
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.time.Duration
 import javax.inject.Inject
@@ -23,7 +24,6 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
     private var isTimerPaused: Boolean = false
     private var roundCount by Delegates.notNull<Int>()
     private var currentRoundNumber = 1
-    val soundNoticePlayback: SoundNoticePlayback = SoundNoticePlayback(context, this)
 
 
     override fun run(timer: TimerPresentation) {
@@ -84,12 +84,8 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
 
     private fun startTimer(millis: Duration, noticeOfEndInSec: Int?): AdvancedCountDownTimer {
         val t = SystemClock.elapsedRealtime()
-        countDownTimer = object : AdvancedCountDownTimer(millis.toMillis() + 1000, 1000) {
+        countDownTimer = object : AdvancedCountDownTimer(millis.toMillis(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                if (millisUntilFinished < 1000) {
-                    onFinish()
-                    this.cancel()
-                }
                 if ((millisUntilFinished/1000).toInt() == noticeOfEndInSec) startSoundNotice()
                 timerObservers.forEach { observer ->
                     observer.onCountDownTick(Duration.ofMillis(millisUntilFinished))

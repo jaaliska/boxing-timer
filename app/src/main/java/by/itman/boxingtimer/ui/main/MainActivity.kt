@@ -13,6 +13,7 @@ import by.itman.boxingtimer.models.TimerModel
 import by.itman.boxingtimer.models.TimerSoundType
 import by.itman.boxingtimer.data.TimerProvider
 import by.itman.boxingtimer.utils.MyUtils
+import by.itman.boxingtimer.utils.getRoundedSeconds
 import dagger.hilt.android.AndroidEntryPoint
 import moxy.MvpAppCompatActivity
 import java.time.Duration
@@ -32,6 +33,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     private lateinit var mTxtChangeTimer: TextView
 
     private lateinit var currentModelTimer: TimerModel
+    private var positionCurrentModelTimerInSpinner: Int = 0
     private lateinit var activeTimerModel: TimerModel
 
     @Inject
@@ -127,7 +129,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
         mButtonStart.setOnClickListener {
             startActivity(Intent(applicationContext, RunActivity::class.java)
-                .putExtra("id", currentModelTimer.id))
+                    .putExtra("id", currentModelTimer.id))
         }
     }
 

@@ -33,7 +33,6 @@ abstract class AbstractAppModule {
     @Singleton
     @Binds
     abstract fun bindsTimerManager(timerManager: TimerManagerImpl): TimerManager
-
 }
 
 @InstallIn(ApplicationComponent::class)
@@ -47,6 +46,12 @@ internal class AppModule {
             Context.MODE_PRIVATE
         )
     }
+
+ //  @Provides
+ //  fun bindsSoundNoticePlaybackFactory(playbackFactory: SoundNoticePlaybackFactory): SoundNoticePlayback {
+ //      return playbackFactory.create()
+ //             }
+
 
  //   @Provides
  //   @Singleton

@@ -11,15 +11,18 @@ import javax.inject.Inject
 
 
 class SoundNoticePlayback @Inject constructor(
-    @ApplicationContext val context: Context, timerManager: TimerManager
+    @ApplicationContext val context: Context, private val timerManager: TimerManager
     ) : TimerObserver {
 
     private lateinit var actualTimer: TimerPresentation
     private var mPlayer: MediaPlayer? = null
     private val tag = "SoundNoticePlayback"
 
-    init {
-        timerManager.subscribe(this)
+    private fun play(sound: TimerSoundType) {
+        mPlayer?.release()
+        mPlayer = MediaPlayer.create(context,
+            TimerSoundType.getResource(sound))
+        mPlayer!!.start()
     }
 
     override fun onCountDownTick(time: Duration) {
@@ -32,18 +35,12 @@ class SoundNoticePlayback @Inject constructor(
     }
 
     override fun onRoundStart(roundNumber: Int) {
-        mPlayer?.release()
-        mPlayer = MediaPlayer.create(context,
-            TimerSoundType.getResource(actualTimer.getSoundTypeOfStartRound()))
-        mPlayer!!.start()
+        play(actualTimer.getSoundTypeOfStartRound())
         Log.i(tag, "onRoundStart")
     }
 
     override fun onRestStart() {
-        mPlayer?.release()
-        mPlayer = MediaPlayer.create(context,
-            TimerSoundType.getResource(actualTimer.getSoundTypeOfStartRest()))
-        mPlayer!!.start()
+        play(actualTimer.getSoundTypeOfStartRest())
         Log.i(tag, "onRestStart")
     }
 
@@ -57,26 +54,18 @@ class SoundNoticePlayback @Inject constructor(
     }
 
     override fun onNoticeOfEndRest() {
-        mPlayer?.release()
-        mPlayer = MediaPlayer.create(context,
-            TimerSoundType.getResource(actualTimer.getSoundTypeOfEndRestNotice()))
-        mPlayer!!.start()
+        play(actualTimer.getSoundTypeOfEndRestNotice())
         Log.i(tag, "onWarnAboutToEndRest")
     }
 
     override fun onNoticeOfEndRound() {
-        mPlayer?.release()
-        mPlayer = MediaPlayer.create(context,
-            TimerSoundType.getResource(actualTimer.getSoundTypeOfEndRoundNotice()))
-        mPlayer!!.start()
+        play(actualTimer.getSoundTypeOfEndRoundNotice())
         Log.i(tag, "onWarnAboutToEndRound")
     }
 
     override fun onTimerFinished() {
-        mPlayer?.release()
-        mPlayer = MediaPlayer.create(context,
-            TimerSoundType.getResource(actualTimer.getSoundTypeOfStartRest()))
-        mPlayer!!.start()
+        play(actualTimer.getSoundTypeOfStartRest())
         Log.i(tag, "onTimerFinished")
+        timerManager.unSubscribe(this)
     }
 }

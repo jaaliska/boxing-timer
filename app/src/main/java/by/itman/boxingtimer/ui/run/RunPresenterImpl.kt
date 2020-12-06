@@ -1,9 +1,7 @@
 package by.itman.boxingtimer.ui.run
 
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.util.Log
 import by.itman.boxingtimer.R
 import by.itman.boxingtimer.data.TimerProvider
@@ -18,7 +16,8 @@ import kotlin.properties.Delegates
 class RunPresenterImpl
 @Inject constructor(
     private val timerProvider: TimerProvider,
-    private val timerManager: TimerManager
+    private val timerManager: TimerManager,
+    private val soundNoticePlayback: SoundNoticePlayback
 ) : MvpPresenter<RunView>(), RunPresenter {
 
     private val tag = "RunPresenter"
@@ -39,6 +38,7 @@ class RunPresenterImpl
     }
 
     override fun runTimer() {
+        timerManager.subscribe(soundNoticePlayback)
         timerManager.run(TimerPresentationImpl(timer))
     }
 

@@ -15,7 +15,6 @@ abstract class AdvancedCountDownTimer(
     @Volatile
     private var cdTimer: AccurateCountDownTimer? = null
     private var pausedWithMillsUntilFinish: Long = millisInFuture
-    private var startTimeStamp: Long = 0L
 
     @Volatile
     private var  state: TimerState = TimerState.PENDING
@@ -36,7 +35,6 @@ abstract class AdvancedCountDownTimer(
     }
 
     private fun createInternalTimer(millisUntilFinished: Long) {
-        startTimeStamp = SystemClock.elapsedRealtime()
         state = TimerState.STARTED
         cdTimer = object: AccurateCountDownTimer(
             millisUntilFinished,
@@ -50,7 +48,6 @@ abstract class AdvancedCountDownTimer(
                 cdTimer = null
                 state = TimerState.FINISHED
                 this@AdvancedCountDownTimer.onFinish()
-                //wait-notify
             }
 
         }.start()
@@ -85,7 +82,7 @@ abstract class AdvancedCountDownTimer(
         }
         cdTimer?.cancel()
         cdTimer = null
-        this.createInternalTimer(millisInFuture - 5) //
+        this.createInternalTimer(millisInFuture - 5) //imitation of delay
         state = TimerState.STARTED
     }
 
