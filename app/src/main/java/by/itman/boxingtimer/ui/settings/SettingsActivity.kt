@@ -16,7 +16,7 @@ import java.time.Duration
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SettingsActivity : AppCompatActivity(), SettingsView {
+class SettingsActivity : AppCompatActivity() {
     private lateinit var data: List<TimerModel>
 
     @Inject
