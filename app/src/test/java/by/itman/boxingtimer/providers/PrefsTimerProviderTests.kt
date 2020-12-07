@@ -12,6 +12,7 @@ import org.mockito.Matchers
 import org.mockito.Mockito
 import org.mockito.Mockito.spy
 import java.time.Duration
+import kotlin.concurrent.timer
 import kotlin.random.Random
 
 class PrefsTimerProviderTests {
@@ -159,6 +160,45 @@ class PrefsTimerProviderTests {
         fail("Exception have not been thrown")
     }
 
+    @Test
+    fun testGetActivityTimer() {
+        createTimers()
+        val activeTimer = provider.getById(3)!!
+        prefsMock.edit().putInt("active_timer_model", 3).apply()
+        assertTimersAreEqual(activeTimer, provider.getActiveTimer()!!)
+    }
+
+    @Test
+    fun testGetActiveTimerIsNotExist() {
+        assertNull(provider.getActiveTimer())
+        createTimers()
+        prefsMock.edit().putInt("active_timer_model", 5).apply()
+        assertNull(provider.getActiveTimer())
+    }
+
+    @Test
+    fun testSetActivityTimer() {
+        createTimers()
+        provider.setActiveTimer(provider.getById(3)!!)
+        val expected = prefsMock.getInt("active_timer_model", 0)
+        assertEquals(expected, 3)
+    }
+     @Test(expected = java.lang.IndexOutOfBoundsException::class)
+     fun testTimerIsNotExist() {
+         createTimers()
+         provider.setActiveTimer(createTimer(5))
+     }
+
+    @Test
+    fun testRemoveActiveTimer() {
+        createTimers()
+        val timer = provider.getById(2)!!
+        provider.setActiveTimer(timer)
+        provider.remove(timer)
+        assertEquals(prefsMock.getInt("active_timer_model", 0), 0)
+        assertNull(provider.getActiveTimer())
+    }
+
     private fun createTimer(id: Int?): TimerModel {
         return TimerModel(
             id,
@@ -174,6 +214,13 @@ class PrefsTimerProviderTests {
             getRandomTimerSoundType(),
             getRandomTimerSoundType()
         )
+    }
+
+    private fun createTimers() {
+        provider.save(createTimer(null))
+        provider.save(createTimer(null))
+        provider.save(createTimer(null))
+        provider.save(createTimer(null))
     }
 
     private fun getRandomTimerSoundType(): TimerSoundType {
