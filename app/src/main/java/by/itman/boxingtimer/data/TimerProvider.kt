@@ -7,9 +7,6 @@ interface TimerProvider {
     fun getById(i: Int): TimerModel?
     fun save(timer: TimerModel): TimerModel
     fun remove(timer: TimerModel)
-    fun setActiveTimer(id: Int)
-    fun getActiveTimer(): TimerModel
-    fun setPositionActiveTimerForSpinner(id: Int)
-    fun getPositionActiveTimerForSpinner(): Int
-    fun initializeDefaultTimers()
+    fun setActiveTimer(timer: TimerModel)
+    fun getActiveTimer(): TimerModel?
 }

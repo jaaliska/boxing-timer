@@ -46,7 +46,6 @@ class SettingsPresenterImpl
                         soundTypeOfStartRest = TimerSoundType.GONG
                     )
                 )
-                timerProvider.setPositionActiveTimerForSpinner(timerProvider.getAll().size - 1)
                 view.startEdition(tm.id!!)
             }
         )
@@ -58,6 +57,4 @@ class SettingsPresenterImpl
             timerProvider = timerProvider
         )
     }
-
-
 }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import by.itman.boxingtimer.R
+import by.itman.boxingtimer.data.ApplicationDefaultTimers
 import by.itman.boxingtimer.ui.run.RunActivity
 import by.itman.boxingtimer.ui.settings.SettingsActivity
 import by.itman.boxingtimer.utils.MyAlertDialogs
@@ -39,6 +40,10 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     @Inject
     lateinit var sharedPrefs: SharedPreferences
+
+    @Inject
+    lateinit var applicationDefaultTimers: ApplicationDefaultTimers
+
     private lateinit var spinner: Spinner
     private lateinit var mDialogs: MyAlertDialogs
 
@@ -47,7 +52,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        timerProvider.initializeDefaultTimers()
+        applicationDefaultTimers.initializeDefaultTimers()
         mImgButSettings = findViewById(R.id.imgBut_main_settings)
         mTxtRoundDuration = findViewById(R.id.txt_main_roundDuration)
         mTimeRoundDuration = findViewById(R.id.time_main_roundDuration)
@@ -122,7 +127,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     override fun onPause() {
         super.onPause()
         timerProvider.save(activeTimerModel)
-        activeTimerModel.id?.let { setActiveTimerModel(it) }
+        setActiveTimerModel(activeTimerModel)
     }
 
     private fun setSpinner() {
@@ -131,7 +136,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
         spinner = findViewById(R.id.spinner_main_timer)
         spinner.adapter = adapter
-        spinner.setSelection(positionCurrentModelTimerInSpinner)
+        spinner.setSelection(data.indexOf(activeTimerModel))
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -158,19 +163,18 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         )
     }
 
-    private fun setActiveTimerModel(id: Int) {
-        timerProvider.setActiveTimer(id)
-        timerProvider.setPositionActiveTimerForSpinner(positionCurrentModelTimerInSpinner)
+    private fun setActiveTimerModel(timer: TimerModel) {
+        timerProvider.setActiveTimer(timer)
     }
 
     private fun getActiveTimerModel(): TimerModel {
-        val timerPositionInSpinner = timerProvider.getPositionActiveTimerForSpinner()
-        positionCurrentModelTimerInSpinner =
-            if (timerPositionInSpinner >= timerProvider.getAll().size) 0 else timerPositionInSpinner
-
         val timersModel = timerProvider.getAll()
         return  if (timersModel.isNotEmpty()) {
-            timerProvider.getActiveTimer()
+            if (timerProvider.getActiveTimer() != null) {
+                timerProvider.getActiveTimer()!!
+            } else {
+                timersModel[0]
+            }
         } else {
             TimerModel(
                 id = null, name = "Бокс",
