@@ -52,7 +52,7 @@ class SettingsAdapter(
         removeButton.setOnClickListener {
             myDialog.alertDialogForActionVerification(
                 context = context,
-                title = R.string.txt_sittings_dialog_remove,
+                title = R.string.sittings_txt_dialog_remove,
                 consumer = {
                     val tm = getItem(position)
                     if (tm != null) {

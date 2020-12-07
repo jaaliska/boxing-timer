@@ -16,8 +16,6 @@
             android:textSize="@dimen/textView_time_size"
             android:autofillHints="text"
             tools:ignore="LabelFor,SpUsage"
-            android:text="@string/min_text"
-            android:selectAllOnFocus="true"
     />
     <TextView
             android:layout_width="wrap_content"
@@ -31,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:text="@string/sec_text"
             android:textSize="@dimen/textView_time_size"
             tools:ignore="SpUsage"/>
 

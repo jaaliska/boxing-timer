@@ -35,10 +35,8 @@
             android:inputType="time"
             android:clickable="true"
             android:focusable="true"
-
             android:textSize="@dimen/textView_time_size"
             android:textStyle="bold"
-            android:text="@string/textview_time_set_value"
             tools:ignore="OnClick,SpUsage,TextViewEdits"
             android:layout_weight="3"/>
 
@@ -61,7 +59,6 @@
             android:focusable="true"
             android:textSize="@dimen/textView_time_size"
             android:textStyle="bold"
-            android:text="01:00"
             tools:ignore="OnClick,SpUsage,TextViewEdits"
             android:layout_weight="3"/>
 
@@ -82,10 +79,8 @@
             android:inputType="time"
             android:clickable="true"
             android:focusable="true"
-
             android:textSize="@dimen/textView_time_size"
             android:textStyle="bold"
-            android:text="8"
             tools:ignore="OnClick,SpUsage,TextViewEdits"
             android:layout_weight="3"/>
 
@@ -94,7 +89,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Длительность тренировки: 32 мин"
             android:textSize="@dimen/textView_name_of_time"
             android:layout_weight="1"/>
 
@@ -103,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@string/button_main_start"
+            android:text="@string/main_button__start"
             android:textStyle="bold"
             android:textSize="@dimen/textView_time_size"
             android:layout_weight="3"
@@ -117,7 +111,7 @@
             android:id="@+id/txt_main_change_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_main_change_timer"
+            android:text="@string/main_txt_timer_selection"
             android:textSize="@dimen/textView_name_of_time"
             android:gravity="center|bottom"
             android:layout_gravity="center_horizontal"

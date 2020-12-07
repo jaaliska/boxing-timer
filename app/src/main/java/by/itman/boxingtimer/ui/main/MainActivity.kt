@@ -92,10 +92,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         mTimeRestDuration.text = timer.getRestDuration().timerFormat()
         mTimeRoundDuration.text = timer.getRoundDuration().timerFormat()
         mTimeRoundQuantity.text = "${timer.getRoundQuantity()}"
-        mTrainingDuration.text = StringBuilder(
-            "Длительность тренировки: " +
-                    "${timer.getTrainingDuration()} мин."
-        )
+        mTrainingDuration.text = getString(R.string.main_txt_training_duration, timer.getTrainingDuration())
     }
 
     override fun startActivityWith(intent: Intent) {

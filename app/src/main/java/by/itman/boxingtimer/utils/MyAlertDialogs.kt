@@ -8,6 +8,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
@@ -43,6 +44,9 @@ class MyAlertDialogs {
         val mSec: Long = time.seconds - mMin * 60
         editMin.setText(String.format("%02d", mMin))
         editSec.setText(String.format("%02d", mSec))
+        editMin.setSelectAllOnFocus(true)
+        selectFocus(editMin)
+        openKeyboard(context)
         editMin.addTextChangedListener(MyTextWatcher(editMin, 0, 60))
         editSec.addTextChangedListener(MyTextWatcher(editSec, 0, 60))
         editSec.setSelectAllOnFocus(true)
@@ -64,6 +68,9 @@ class MyAlertDialogs {
                 val sec: Int = editSec.editableText.toString().toInt()
                 consumer(Duration.ofSeconds(min * 60L + sec))
             }
+            .setOnDismissListener {
+                closeKeyboard(context)
+            }
         builder.create()
         builder.show()
     }
@@ -82,7 +89,7 @@ class MyAlertDialogs {
         var changeValue = value
         editValue.setText("$changeValue")
         editValue.setOnClickListener { view: View? ->
-            editValue.selectAll()
+            selectFocus(editValue)
         }
         editValue.addTextChangedListener(MyTextWatcher(editValue, 1, 100))
         val minusValue: Button = subView.findViewById(R.id.button_main_value_minus)
@@ -127,6 +134,8 @@ class MyAlertDialogs {
         val subView: View = inflater.inflate(R.layout.alert_dialog_edit_text, null)
         val editName: EditText = subView.findViewById(R.id.edit_txt_enter_string_dialog)
         if (string != null) editName.setText(string)
+        selectFocus(editName)
+        openKeyboard(context)
 
         @SuppressLint("RestrictedApi")
         val dialogTitle = DialogTitle(context)
@@ -143,6 +152,9 @@ class MyAlertDialogs {
                 val name = editName.text.toString()
                 if (name.isEmpty()) return@setNegativeButton
                 consumer(name)
+            }
+            .setOnDismissListener {
+                closeKeyboard(context)
             }
         builder.create()
         builder.show()
@@ -213,5 +225,20 @@ class MyAlertDialogs {
             }
         builder.create()
         builder.show()
+    }
+
+    private fun selectFocus(editText: EditText) {
+        editText.requestFocus()
+        editText.selectAll()
+    }
+
+    private fun openKeyboard(context: Context) {
+        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+    }
+
+    private fun closeKeyboard(context: Context) {
+        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
     }
 }

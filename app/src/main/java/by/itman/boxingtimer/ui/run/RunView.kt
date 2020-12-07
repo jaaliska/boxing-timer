@@ -8,7 +8,7 @@ import java.time.Duration
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface RunView: MvpView {
-    fun setupRunUp(duration: Duration)
+    fun setupRunUp()
     fun setOnTickProgress(progress: Duration)
     fun showPause()
     fun showRestart()

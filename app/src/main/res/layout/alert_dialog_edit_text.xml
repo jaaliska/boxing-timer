@@ -5,7 +5,6 @@
     <EditText
             android:id="@+id/edit_txt_enter_string_dialog"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:selectAllOnFocus="true" />
+            android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

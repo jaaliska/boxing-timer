@@ -33,7 +33,7 @@ class EditingPresenterImpl
         when (timerField) {
             TimerField.NAME ->
                 view.showStringDialog(
-                    title = R.string.txt_editing_timer_name,
+                    title = R.string.editing_txt_dialog_enter_timer_name,
                     string = timer.name,
                     consumer = { string ->
                         timer.name = string

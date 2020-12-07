@@ -11,7 +11,7 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Выберите таймер для редактирования:"
+            android:text="@string/settings_txt_title_timer_selection"
             android:gravity="center_horizontal"
             android:textStyle="bold"
             android:textSize="20sp"
@@ -27,5 +27,5 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Создать новый таймер"/>
+            android:text="@string/settings_button_create_new_timer"/>
 </LinearLayout>

@@ -76,7 +76,7 @@ class RunPresenterImpl
         }
 
         override fun onRunUp(timer: TimerPresentation) {
-            runView.setupRunUp(timer.getRunUp())
+            runView.setupRunUp()
         }
 
         override fun onRoundStart(roundNumber: Int) {

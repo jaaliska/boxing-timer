@@ -11,7 +11,7 @@
                 android:id="@+id/button_main_value_minus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-"
+                android:text="@string/dialog_but_minus"
                 android:textSize="25dp"
                 tools:ignore="SpUsage"/>
 
@@ -27,7 +27,7 @@
                 android:id="@+id/button_main_value_plus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+"
+                android:text="@string/dialog_but_plus"
                 android:textSize="25dp"
                 tools:ignore="SpUsage"/>
 </LinearLayout>

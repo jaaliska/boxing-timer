@@ -63,9 +63,8 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
         mTxtCountTime.text = progress.timerFormat()
     }
 
-    override fun setupRunUp(duration: Duration) {
-        mTxtTimerStatus.text = "Подготовка"
-
+    override fun setupRunUp() {
+        mTxtTimerStatus.text = getString(R.string.run_txt_title_runUp)
     }
 
     private fun updateButtons() {
@@ -96,13 +95,15 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
 
     override fun startRound(roundCount: Int, roundNumber: Int) {
         timerState = TimerState.ROUND
-        mTxtCurrentRound.text = "$roundNumber раунд из $roundCount"
-        mTxtTimerStatus.text = "Работа"
+        mTxtCurrentRound.text = getString(
+            R.string.run_txt_title_round_tracking, roundNumber, roundCount
+        )
+        mTxtTimerStatus.text = getString(R.string.run_txt_title_start_round)
     }
 
     override fun startRest() {
         timerState = TimerState.REST
-        mTxtTimerStatus.text = "Отдых"
+        mTxtTimerStatus.text = getString(R.string.run_txt_title_start_rest)
     }
 
     override fun warnOfEndRound() {}

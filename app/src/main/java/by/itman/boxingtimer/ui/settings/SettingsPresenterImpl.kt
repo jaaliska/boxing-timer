@@ -27,7 +27,7 @@ class SettingsPresenterImpl
     override fun onCreateNewTimer(context: Context) {
         myDialog.alertDialogForString(
             context = context,
-            title = R.string.txt_editing_timer_name,
+            title = R.string.settings_txt_dialog_enter_timer_name,
             string = null,
             consumer = { string ->
                 val tm: TimerModel = timerProvider.save(
