@@ -6,6 +6,8 @@ import by.itman.boxingtimer.ui.editing.EditingPresenter
 import by.itman.boxingtimer.ui.editing.EditingPresenterImpl
 import by.itman.boxingtimer.data.PrefsTimerProvider
 import by.itman.boxingtimer.data.TimerProvider
+import by.itman.boxingtimer.ui.main.MainPresenter
+import by.itman.boxingtimer.ui.main.MainPresenterImpl
 import by.itman.boxingtimer.ui.run.*
 import by.itman.boxingtimer.ui.settings.SettingsPresenter
 import by.itman.boxingtimer.ui.settings.SettingsPresenterImpl
@@ -15,7 +17,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 import javax.inject.Singleton
 
 
@@ -25,6 +26,9 @@ abstract class AbstractAppModule {
     @Singleton
     @Binds
     abstract fun bindsTimerProvider(timerProvider: PrefsTimerProvider): TimerProvider
+
+    @Binds
+    abstract fun bindsMainPresenter(mainPresenterImpl: MainPresenterImpl): MainPresenter
 
     @Binds
     abstract fun bindsSettingsPresenter(settingsPresenterImpl: SettingsPresenterImpl): SettingsPresenter

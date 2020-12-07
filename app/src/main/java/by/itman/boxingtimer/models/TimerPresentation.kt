@@ -15,4 +15,5 @@ interface TimerPresentation {
     fun getSoundTypeOfEndRestNotice(): TimerSoundType
     fun getSoundTypeOfStartRound(): TimerSoundType
     fun getSoundTypeOfStartRest(): TimerSoundType
+    fun getTrainingDuration(): Long
 }

@@ -18,12 +18,6 @@ data class TimerModel(
     internal var soundTypeOfStartRest: TimerSoundType
 ) {
 
-
-
-    fun getTrainingDuration(): Long {
-        return roundDuration.plus(restDuration).multipliedBy(roundQuantity.toLong()).toMinutes()
-    }
-
     override fun toString(): String {
         return name
     }

@@ -46,4 +46,10 @@ class TimerPresentationImpl(private val timer: TimerModel): TimerPresentation {
     override fun getSoundTypeOfStartRest(): TimerSoundType {
         return timer.soundTypeOfStartRest
     }
+
+    override fun getTrainingDuration(): Long {
+        return timer.roundDuration
+            .plus(timer.restDuration)
+            .multipliedBy(timer.roundQuantity.toLong()).toMinutes()
+    }
 }
