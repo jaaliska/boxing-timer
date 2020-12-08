@@ -42,41 +42,39 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
+    <ImageButton
             android:id="@+id/button_run_restart"
             android:layout_width="85dp"
             android:layout_height="60dp"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/button_run"
             android:layout_marginTop="48dp"
-            android:text="@string/restart"
+            android:src="@drawable/ic_restart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include_content_timer" />
 
-    <Button
+    <ImageButton
             android:id="@+id/button_run_pause"
             android:layout_width="85dp"
             android:layout_height="60dp"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/button_run"
-            android:layout_toEndOf="@+id/button_run_resume"
-            android:text="@string/pause"
+            android:layout_marginTop="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_run_resume"
-            app:layout_constraintStart_toEndOf="@+id/button_run_restart"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include_content_timer"
-            tools:ignore="MissingConstraints" />
+            android:src="@drawable/ic_pause" />
 
-    <Button
+    <ImageButton
             android:id="@+id/button_run_resume"
             android:layout_width="85dp"
             android:layout_height="60dp"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/button_run"
             android:layout_marginTop="48dp"
-            android:text="@string/resume"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include_content_timer" />
+            app:layout_constraintTop_toBottomOf="@+id/include_content_timer"
+            android:src="@drawable/ic_play"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

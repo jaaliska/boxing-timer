@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import by.itman.boxingtimer.R
@@ -22,9 +23,9 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
     private lateinit var mTxtTimerStatus: TextView
     private lateinit var mTxtContentTimer: View
     private lateinit var mTxtCountTime: TextView
-    private lateinit var mButRestart: Button
-    private lateinit var mButPause: Button
-    private lateinit var mButResume: Button
+    private lateinit var mButRestart: ImageButton
+    private lateinit var mButPause: ImageButton
+    private lateinit var mButResume: ImageButton
     private var timerState: TimerState =  TimerState.RUN_UP
     private var isTimerPaused: Boolean = false
 
@@ -71,10 +72,14 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
         if (isTimerPaused) {
             mButPause.isEnabled = false
             mButResume.isEnabled = true
+            mButPause.visibility = View.GONE
+            mButResume.visibility = View.VISIBLE
         }
         if (!isTimerPaused) {
             mButPause.isEnabled = true
             mButResume.isEnabled = false
+            mButPause.visibility = View.VISIBLE
+            mButResume.visibility = View.GONE
         }
     }
 

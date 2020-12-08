@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import by.itman.boxingtimer.R
@@ -48,7 +48,7 @@ class SettingsAdapter(
             }
         }
 
-        val removeButton: Button = view.findViewById(R.id.button_settings_fragment_remove)
+        val removeButton: ImageButton = view.findViewById(R.id.button_settings_fragment_remove)
         removeButton.setOnClickListener {
             myDialog.alertDialogForActionVerification(
                 context = context,
