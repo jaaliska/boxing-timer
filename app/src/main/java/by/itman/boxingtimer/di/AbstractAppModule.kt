@@ -55,18 +55,4 @@ internal class AppModule {
             Context.MODE_PRIVATE
         )
     }
-
- //  @Provides
- //  fun bindsSoundNoticePlaybackFactory(playbackFactory: SoundNoticePlaybackFactory): SoundNoticePlayback {
- //      return playbackFactory.create()
- //             }
-
-
- //   @Provides
- //   @Singleton
- //   fun provideSoundNoticePlayback(@ApplicationContext context: Context, timerManager: TimerManagerImpl): SoundNoticePlayback {
- //       val playback = SoundNoticePlayback(context, timerManager)
- //       timerManager.subscribe(playback)
- //       return playback
- //   }
 }

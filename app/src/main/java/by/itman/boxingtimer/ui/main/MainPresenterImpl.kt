@@ -14,12 +14,11 @@ import by.itman.boxingtimer.models.TimerSoundType
 import by.itman.boxingtimer.ui.run.RunActivity
 import by.itman.boxingtimer.ui.settings.SettingsActivity
 import by.itman.boxingtimer.utils.MyAlertDialogs
-import moxy.MvpPresenter
 import java.time.Duration
 import javax.inject.Inject
 
 class MainPresenterImpl
-@Inject constructor(private val timerProvider: TimerProvider): MvpPresenter<MainView>(), MainPresenter {
+@Inject constructor(private val timerProvider: TimerProvider): MainPresenter {
     private lateinit var mainView: MainView
     private var activeTimerModel: TimerModel = getActiveTimerModel()
     private val mDialogs: MyAlertDialogs = MyAlertDialogs()

@@ -6,14 +6,11 @@ import by.itman.boxingtimer.data.TimerProvider
 import by.itman.boxingtimer.models.TimerField
 import by.itman.boxingtimer.models.TimerPresentationImpl
 import by.itman.boxingtimer.models.TimerPresentation
-
-import moxy.MvpPresenter
 import javax.inject.Inject
 
 
 class EditingPresenterImpl
-@Inject constructor(private val timerProvider: TimerProvider) :
-    MvpPresenter<EditingView>(), EditingPresenter {
+@Inject constructor(private val timerProvider: TimerProvider): EditingPresenter {
 
     private lateinit var view: EditingView
     private lateinit var timer: TimerModel

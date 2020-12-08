@@ -7,7 +7,6 @@ import by.itman.boxingtimer.R
 import by.itman.boxingtimer.data.TimerProvider
 import by.itman.boxingtimer.models.*
 import by.itman.boxingtimer.utils.MyAlertDialogs
-import moxy.MvpPresenter
 import java.time.Duration
 import javax.inject.Inject
 import kotlin.properties.Delegates
@@ -18,28 +17,28 @@ class RunPresenterImpl
     private val timerProvider: TimerProvider,
     private val timerManager: TimerManager,
     private val soundNoticePlayback: SoundNoticePlayback
-) : MvpPresenter<RunView>(), RunPresenter {
+) : RunPresenter {
 
     private val tag = "RunPresenter"
     private val myDialog = MyAlertDialogs()
     private lateinit var runView: RunView
-    private lateinit var timer: TimerModel
+    private lateinit var actualTimer: TimerModel
     private var roundCount by Delegates.notNull<Int>()
     private var currentRoundNumber by Delegates.notNull<Int>()
 
 
     override fun init(view: RunView, timerId: Int) {
         runView = view
-        timerProvider.getById(timerId)?.let { timer = it }
+        timerProvider.getById(timerId)?.let { actualTimer = it }
             ?: throw ExceptionInInitializerError("TimerModel with id $timerId return null")
-        roundCount = timer.roundQuantity
+        roundCount = actualTimer.roundQuantity
         currentRoundNumber = roundCount
         timerManager.subscribe(TimerObserverForPresenter())
     }
 
     override fun runTimer() {
         timerManager.subscribe(soundNoticePlayback)
-        timerManager.run(TimerPresentationImpl(timer))
+        timerManager.run(TimerPresentationImpl(actualTimer))
     }
 
     override fun onTimerPause() {
@@ -65,12 +64,8 @@ class RunPresenterImpl
         )
     }
 
-    override fun onDestroy() {
-        Log.i(tag, "onDestroy")
-        super.onDestroy()
-    }
-
     inner class TimerObserverForPresenter : TimerObserver {
+
         override fun onCountDownTick(time: Duration) {
             runView.setOnTickProgress(time)
         }
@@ -81,11 +76,11 @@ class RunPresenterImpl
 
         override fun onRoundStart(roundNumber: Int) {
             currentRoundNumber = roundNumber
-            runView.startRound(roundCount, roundNumber)
+            runView.startRound(roundCount, roundNumber, actualTimer.roundDuration)
         }
 
         override fun onRestStart() {
-            runView.startRest()
+            runView.startRest(actualTimer.restDuration)
         }
 
         override fun onPauseTimer() {

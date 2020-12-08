@@ -1,16 +1,21 @@
 package by.itman.boxingtimer.ui.run
 
 
+import android.graphics.*
+import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import by.itman.boxingtimer.R
 import by.itman.boxingtimer.utils.timerFormat
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.content_timer.*
 import java.time.Duration
 import javax.inject.Inject
 
@@ -23,6 +28,7 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
     private lateinit var mTxtTimerStatus: TextView
     private lateinit var mTxtContentTimer: View
     private lateinit var mTxtCountTime: TextView
+    private lateinit var mProgressBar: ProgressBar
     private lateinit var mButRestart: ImageButton
     private lateinit var mButPause: ImageButton
     private lateinit var mButResume: ImageButton
@@ -45,6 +51,7 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
         mTxtTimerStatus = findViewById(R.id.txt_run_timer_status)
         mTxtContentTimer = findViewById(R.id.include_content_timer)
         mTxtCountTime = mTxtContentTimer.findViewById(R.id.txt_run_count_time)
+        mProgressBar =  mTxtContentTimer.findViewById(R.id.progress_countdown)
         mButPause = findViewById(R.id.button_run_pause)
         mButRestart = findViewById(R.id.button_run_restart)
         mButResume = findViewById(R.id.button_run_resume)
@@ -58,14 +65,16 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
             runPresenter.onTimerResume()
         }
         updateButtons()
-    }
+     }
 
     override fun setOnTickProgress(progress: Duration) {
         mTxtCountTime.text = progress.timerFormat()
+        mProgressBar.progress = mProgressBar.max - progress.seconds.toInt()
     }
 
     override fun setupRunUp() {
         mTxtTimerStatus.text = getString(R.string.run_txt_title_runUp)
+        mProgressBar.visibility = ProgressBar.INVISIBLE
     }
 
     private fun updateButtons() {
@@ -98,17 +107,32 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
         updateButtons()
     }
 
-    override fun startRound(roundCount: Int, roundNumber: Int) {
+    override fun startRound(roundCount: Int, roundNumber: Int, roundDuration: Duration) {
         timerState = TimerState.ROUND
         mTxtCurrentRound.text = getString(
             R.string.run_txt_title_round_tracking, roundNumber, roundCount
         )
         mTxtTimerStatus.text = getString(R.string.run_txt_title_start_round)
+        mProgressBar.max = roundDuration.seconds.toInt()
+        mProgressBar.visibility = ProgressBar.VISIBLE
+        mProgressBar.progressDrawable.setMyColorFilter(ContextCompat.getColor(this, R.color.colorRound))
     }
 
-    override fun startRest() {
+    override fun startRest(restDuration: Duration) {
         timerState = TimerState.REST
         mTxtTimerStatus.text = getString(R.string.run_txt_title_start_rest)
+        mProgressBar.max = restDuration.seconds.toInt()
+        mProgressBar.progressDrawable.setMyColorFilter(ContextCompat.getColor(this, R.color.colorRest))
+
+    }
+
+    private fun Drawable.setMyColorFilter(color: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
+        } else {
+            @Suppress("DEPRECATION")
+            setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+        }
     }
 
     override fun warnOfEndRound() {}
@@ -133,5 +157,6 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
         runPresenter.onTimerFinished()
         Log.i("RunActivity", "onDestroy")
         super.onDestroy()
+        /////unsubscribe presenter
     }
 }

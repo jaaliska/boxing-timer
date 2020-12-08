@@ -3,16 +3,16 @@ package by.itman.boxingtimer.ui.main
 import android.content.Intent
 import android.os.Bundle
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import by.itman.boxingtimer.R
 import by.itman.boxingtimer.data.ApplicationDefaultTimers
 import by.itman.boxingtimer.models.TimerPresentation
 import by.itman.boxingtimer.utils.timerFormat
 import dagger.hilt.android.AndroidEntryPoint
-import moxy.MvpAppCompatActivity
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : MvpAppCompatActivity(), MainView {
+class MainActivity : AppCompatActivity(), MainView {
     private lateinit var mImgButSettings: ImageButton
     private lateinit var mTimeRoundDuration: TextView
     private lateinit var mTxtRoundDuration: TextView

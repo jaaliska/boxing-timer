@@ -102,13 +102,16 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
 
     //todo fix bug with sound
     fun startSoundNotice() {
-        if (timerState == TimerState.ROUND) {
-            timerObservers.forEach { observer -> observer.onNoticeOfEndRound() }
-            Log.i(tag,"onNoticeAboutToEndRound")
-        }
-        if (timerState == TimerState.REST) {
-            timerObservers.forEach { observer -> observer.onNoticeOfEndRest() }
-            Log.i(tag,"onNoticeAboutToEndRest")
+        when(timerState) {
+            TimerState.ROUND -> {
+                timerObservers.forEach { observer -> observer.onNoticeOfEndRound() }
+                Log.i(tag, "onNoticeAboutToEndRound")
+            }
+            TimerState.REST -> {
+                timerObservers.forEach { observer -> observer.onNoticeOfEndRest() }
+                Log.i(tag, "onNoticeAboutToEndRest")
+            }
+            else -> {}
         }
     }
 

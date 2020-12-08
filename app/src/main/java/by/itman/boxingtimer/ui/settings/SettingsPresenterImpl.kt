@@ -6,15 +6,12 @@ import by.itman.boxingtimer.R
 import by.itman.boxingtimer.data.TimerProvider
 import by.itman.boxingtimer.models.TimerModel
 import by.itman.boxingtimer.models.TimerSoundType
-import by.itman.boxingtimer.ui.editing.EditingView
 import by.itman.boxingtimer.utils.MyAlertDialogs
-import moxy.MvpPresenter
 import java.time.Duration
 import javax.inject.Inject
 
 class SettingsPresenterImpl
-@Inject constructor(private val timerProvider: TimerProvider):
-    MvpPresenter<EditingView>(), SettingsPresenter {
+@Inject constructor(private val timerProvider: TimerProvider): SettingsPresenter {
 
     private lateinit var view: SettingsView
     private val myDialog: MyAlertDialogs = MyAlertDialogs()
