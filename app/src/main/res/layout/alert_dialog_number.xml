@@ -9,11 +9,11 @@
         >
         <Button
                 android:id="@+id/button_main_value_minus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80sp"
+                android:layout_height="60sp"
                 android:text="@string/dialog_but_minus"
-                android:textSize="25dp"
-                tools:ignore="SpUsage"/>
+                android:gravity="center"
+                android:textSize="40sp" />
 
 <EditText
         android:id="@+id/edit_txt_main_value"
@@ -25,9 +25,9 @@
 />
         <Button
                 android:id="@+id/button_main_value_plus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80sp"
+                android:layout_height="60sp"
                 android:text="@string/dialog_but_plus"
-                android:textSize="25dp"
-                tools:ignore="SpUsage"/>
+                android:gravity="center"
+                android:textSize="40sp" />
 </LinearLayout>

@@ -86,10 +86,12 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
         countDownTimer = object : AdvancedCountDownTimer(millis.toMillis(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 if ((millisUntilFinished/1000).toInt() == noticeOfEndInSec) startSoundNotice()
-                timerObservers.forEach { observer ->
-                    observer.onCountDownTick(Duration.ofMillis(millisUntilFinished))
+                if (millisUntilFinished >= 500L) {
+                    timerObservers.forEach { observer ->
+                        observer.onCountDownTick(Duration.ofMillis(millisUntilFinished))
+                    }
+                    Log.i("$tag timer going", millisUntilFinished.toString())
                 }
-                Log.i("$tag timer going", millisUntilFinished.toString())
             }
 
             override fun onFinish() {

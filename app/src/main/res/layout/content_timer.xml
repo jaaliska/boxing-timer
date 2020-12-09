@@ -12,6 +12,7 @@
             android:layout_height="wrap_content"
             android:text="03:00"
             android:textSize="70sp"
+            style="@style/text_large"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

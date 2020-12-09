@@ -69,25 +69,26 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
 
     override fun setOnTickProgress(progress: Duration) {
         mTxtCountTime.text = progress.timerFormat()
-        mProgressBar.progress = mProgressBar.max - progress.seconds.toInt()
+        //mProgressBar.progress = mProgressBar.max - progress.seconds.toInt()
+        mProgressBar.progress = progress.seconds.toInt()
     }
 
-    override fun setupRunUp() {
+    override fun setupRunUp(runUpDuration: Duration) {
         mTxtTimerStatus.text = getString(R.string.run_txt_title_runUp)
-        mProgressBar.visibility = ProgressBar.INVISIBLE
+        mTxtTimerStatus.setTextColor(ContextCompat.getColor(this, R.color.colorAccent))
+        mProgressBar.max = runUpDuration.seconds.toInt()
+        mProgressBar.progressDrawable.setMyColorFilter(ContextCompat.getColor(this, R.color.colorBold))
     }
 
     private fun updateButtons() {
         if (isTimerPaused) {
             mButPause.isEnabled = false
             mButResume.isEnabled = true
-            mButPause.visibility = View.GONE
             mButResume.visibility = View.VISIBLE
         }
         if (!isTimerPaused) {
             mButPause.isEnabled = true
             mButResume.isEnabled = false
-            mButPause.visibility = View.VISIBLE
             mButResume.visibility = View.GONE
         }
     }
@@ -113,14 +114,15 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
             R.string.run_txt_title_round_tracking, roundNumber, roundCount
         )
         mTxtTimerStatus.text = getString(R.string.run_txt_title_start_round)
+        mTxtTimerStatus.setTextColor(ContextCompat.getColor(this, R.color.colorRound))
         mProgressBar.max = roundDuration.seconds.toInt()
-        mProgressBar.visibility = ProgressBar.VISIBLE
         mProgressBar.progressDrawable.setMyColorFilter(ContextCompat.getColor(this, R.color.colorRound))
     }
 
     override fun startRest(restDuration: Duration) {
         timerState = TimerState.REST
         mTxtTimerStatus.text = getString(R.string.run_txt_title_start_rest)
+        mTxtTimerStatus.setTextColor(ContextCompat.getColor(this, R.color.colorRest))
         mProgressBar.max = restDuration.seconds.toInt()
         mProgressBar.progressDrawable.setMyColorFilter(ContextCompat.getColor(this, R.color.colorRest))
 

@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".ui.settings.SettingsActivity"
-        tools:ignore="ExtraText"
-        android:orientation="vertical">
+        tools:ignore="ExtraText">
 
     <TextView
+            style="@style/text_large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings_txt_title_timer_selection"
             android:gravity="center_horizontal"
-            android:textStyle="bold"
-            android:textSize="20sp"
-        />
+            android:text="@string/settings_txt_title_timer_selection"
+            android:textSize="20sp" />
 
     <ListView
             android:id="@+id/list_timers_settings"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
+
     <Button
             android:id="@+id/button_new_timer_settings"
+            android:background="@drawable/black_border"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/settings_button_create_new_timer"/>
+            android:layout_height="35sp"
+            android:gravity="center|top"
+            android:text="@string/settings_button_create_new_timer"
+            android:textSize="25sp" />
 </LinearLayout>

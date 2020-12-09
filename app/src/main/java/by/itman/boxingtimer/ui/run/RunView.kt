@@ -4,7 +4,7 @@ import java.time.Duration
 
 
 interface RunView {
-    fun setupRunUp()
+    fun setupRunUp(runUpDuration: Duration)
     fun setOnTickProgress(progress: Duration)
     fun showPause()
     fun showRestart()

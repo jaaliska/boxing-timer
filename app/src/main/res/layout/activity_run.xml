@@ -12,8 +12,9 @@
             android:id="@+id/txt_run_round_show"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@id/txt_run_timer_status"
+            app:layout_constraintBottom_toTopOf="@+id/txt_run_timer_status"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -24,11 +25,12 @@
             android:id="@+id/txt_run_timer_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
+            android:textSize="50sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/include_content_timer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_run_round_show"
             tools:ignore="MissingConstraints" />
 
     <include
@@ -44,23 +46,25 @@
 
     <ImageButton
             android:id="@+id/button_run_restart"
-            android:layout_width="85dp"
-            android:layout_height="60dp"
+            android:layout_width="100sp"
+            android:layout_height="80sp"
             android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/button_run"
-            android:layout_marginTop="48dp"
+            android:background="@drawable/black_border"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_restart"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_run_pause"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include_content_timer" />
 
     <ImageButton
             android:id="@+id/button_run_pause"
-            android:layout_width="85dp"
-            android:layout_height="60dp"
+            android:layout_width="100sp"
+            android:layout_height="80sp"
             android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/button_run"
-            android:layout_marginTop="48dp"
+            android:background="@drawable/black_border"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toEndOf="@+id/button_run_restart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include_content_timer"
@@ -68,13 +72,14 @@
 
     <ImageButton
             android:id="@+id/button_run_resume"
-            android:layout_width="85dp"
-            android:layout_height="60dp"
+            android:layout_width="100sp"
+            android:layout_height="80sp"
             android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/button_run"
-            android:layout_marginTop="48dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include_content_timer"
-            android:src="@drawable/ic_play"/>
+            android:background="@drawable/black_border"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_play_xml"
+            app:layout_constraintBottom_toBottomOf="@+id/button_run_pause"
+            app:layout_constraintEnd_toEndOf="@+id/button_run_pause"
+            app:layout_constraintStart_toStartOf="@+id/button_run_pause"
+            app:layout_constraintTop_toTopOf="@+id/button_run_pause" />
 </androidx.constraintlayout.widget.ConstraintLayout>

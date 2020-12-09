@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:src="@mipmap/settings"
+            android:background="@null"
             tools:ignore="RtlHardcoded"
             android:layout_weight="1"/>
 
@@ -36,7 +37,7 @@
             android:clickable="true"
             android:focusable="true"
             android:textSize="@dimen/textView_time_size"
-            android:textStyle="bold"
+            style="@style/text_large"
             tools:ignore="OnClick,SpUsage,TextViewEdits"
             android:layout_weight="3"/>
 
@@ -58,7 +59,7 @@
             android:clickable="true"
             android:focusable="true"
             android:textSize="@dimen/textView_time_size"
-            android:textStyle="bold"
+            style="@style/text_large"
             tools:ignore="OnClick,SpUsage,TextViewEdits"
             android:layout_weight="3"/>
 
@@ -80,7 +81,7 @@
             android:clickable="true"
             android:focusable="true"
             android:textSize="@dimen/textView_time_size"
-            android:textStyle="bold"
+            style="@style/text_large"
             tools:ignore="OnClick,SpUsage,TextViewEdits"
             android:layout_weight="3"/>
 
@@ -94,14 +95,16 @@
 
     <Button
             android:id="@+id/button_main_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:background="@drawable/button_start"
+            style="@style/text_large"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
             android:layout_gravity="center_horizontal"
-            android:text="@string/main_button__start"
-            android:textStyle="bold"
-            android:textSize="@dimen/textView_time_size"
             android:layout_weight="3"
-            tools:ignore="SpUsage"/>
+            android:text="@string/main_button__start"
+            android:gravity="center_horizontal|center_vertical"
+            android:textSize="@dimen/textView_time_size"
+            tools:ignore="SpUsage" />
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

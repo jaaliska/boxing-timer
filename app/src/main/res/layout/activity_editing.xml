@@ -18,7 +18,8 @@
             android:id="@+id/txt_settings_timer_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            style="@style/text_large"
+            android:textColor="@color/colorAccent"
             android:gravity="center_horizontal"
             android:textSize="50sp"/>
 
