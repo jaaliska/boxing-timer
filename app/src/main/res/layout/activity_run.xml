@@ -46,7 +46,7 @@
 
     <ImageButton
             android:id="@+id/button_run_restart"
-            android:layout_width="90sp"
+            android:layout_width="70sp"
             android:layout_height="70sp"
             android:layout_gravity="bottom|end"
             android:scaleType="fitXY"
@@ -57,7 +57,7 @@
 
     <ImageButton
             android:id="@+id/button_run_pause"
-            android:layout_width="90sp"
+            android:layout_width="70sp"
             android:layout_height="70sp"
             android:layout_gravity="bottom|end"
             android:scaleType="fitXY"
@@ -71,7 +71,7 @@
 
     <ImageButton
             android:id="@+id/button_run_resume"
-            android:layout_width="90sp"
+            android:layout_width="70sp"
             android:layout_height="70sp"
             android:layout_gravity="bottom|end"
             android:scaleType="fitXY"

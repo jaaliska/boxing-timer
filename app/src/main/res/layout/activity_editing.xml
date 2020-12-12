@@ -1,57 +1,85 @@
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <TextView
-            android:id="@+id/txt_settings_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/editing_txt_title"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginTop="15dp"/>
 
     <TextView
             android:id="@+id/txt_settings_timer_name"
+            android:textStyle="bold"
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/text_large"
-            android:textColor="@color/colorAccent"
             android:gravity="center_horizontal"
-            android:textSize="50sp"/>
+            android:text="Бокс"
+            android:textSize="50sp" />
 
-    <include  layout="@layout/editing_fragment"
-            android:id="@+id/editing_layout_roundDuration" />
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <include  layout="@layout/editing_fragment"
-            android:id="@+id/editing_layout_restDuration" />
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    <include  layout="@layout/editing_fragment"
-            android:id="@+id/editing_layout_roundQuantity" />
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:layout_marginStart="16dp"
+                    android:text="Настройки времени"
+                    android:textSize="20dp" />
 
-    <include  layout="@layout/editing_fragment"
-            android:id="@+id/editing_layout_runUp" />
+            <include
+                    android:id="@+id/editing_layout_roundDuration"
+                    layout="@layout/editing_fragment" />
 
-    <include  layout="@layout/editing_fragment"
-            android:id="@+id/editing_layout_noticeOfEndRound" />
+            <include
+                    android:id="@+id/editing_layout_restDuration"
+                    layout="@layout/editing_fragment" />
 
-    <include  layout="@layout/editing_fragment"
-            android:id="@+id/editing_layout_noticeOfEndRest" />
+            <include
+                    android:id="@+id/editing_layout_roundQuantity"
+                    layout="@layout/editing_fragment" />
 
-    <include  layout="@layout/editing_fragment"
-            android:id="@+id/editing_layout_soundTypeOfStartRound" />
+            <include
+                    android:id="@+id/editing_layout_runUp"
+                    layout="@layout/editing_fragment" />
 
-    <include  layout="@layout/editing_fragment"
-            android:id="@+id/editing_layout_soundTypeOfStartRest" />
+            <include
+                    android:id="@+id/editing_layout_noticeOfEndRound"
+                    layout="@layout/editing_fragment" />
 
-    <include  layout="@layout/editing_fragment"
-            android:id="@+id/editing_layout_soundTypeOfEndRoundNotice" />
+            <include
+                    android:id="@+id/editing_layout_noticeOfEndRest"
+                    layout="@layout/editing_fragment" />
 
-    <include  layout="@layout/editing_fragment"
-            android:id="@+id/editing_layout_soundTypeOfEndRestNotice" />
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:layout_marginStart="16dp"
+                    android:text="Настройки звуков"
+                    android:textSize="20dp" />
+
+            <include
+                    android:id="@+id/editing_layout_soundTypeOfStartRound"
+                    layout="@layout/editing_fragment" />
+
+            <include
+                    android:id="@+id/editing_layout_soundTypeOfStartRest"
+                    layout="@layout/editing_fragment" />
+
+            <include
+                    android:id="@+id/editing_layout_soundTypeOfEndRoundNotice"
+                    layout="@layout/editing_fragment" />
+
+            <include
+                    android:id="@+id/editing_layout_soundTypeOfEndRestNotice"
+                    layout="@layout/editing_fragment" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>
