@@ -9,7 +9,7 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/MyTheme">
+            android:theme="@style/MyLightTheme">
         <activity android:name=".ui.run.RunActivity"
                 android:screenOrientation="portrait"/>
         <activity android:name=".ui.settings.SettingsActivity"

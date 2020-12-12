@@ -7,7 +7,7 @@
     <!-- MainActivity -->
     <string name="main_button__start">START</string>
     <string name="main_txt_timer_selection">Выбор таймера:</string>
-    <string name="main_txt_training_duration">Длительность тренировки: %d мин</string>
+    <string name="main_txt_training_duration">Общее время: %d мин</string>
     <!-- MainActivity -->
 
 
@@ -16,6 +16,7 @@
     <string name="settings_button_create_new_timer">Создать новый таймер</string>
     <string name="settings_txt_dialog_enter_timer_name">Введите название таймера</string>
     <string name="sittings_txt_dialog_remove">Удалить таймер?</string>
+    <string name="sittings_txt_darkTheme">Тёмная тема</string>
     <!-- SettingsActivity -->
 
 

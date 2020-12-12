@@ -1,130 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="30dp"
         tools:context=".ui.main.MainActivity"
-        tools:ignore="ExtraText"
-        android:orientation="vertical">
+        tools:ignore="ExtraText">
 
-    <ImageButton
-            android:id="@+id/imgBut_main_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:src="@mipmap/settings"
-            android:background="@null"
-            tools:ignore="RtlHardcoded"
-            android:layout_weight="1"/>
 
     <TextView
             android:id="@+id/txt_main_roundDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_weight="1"
             android:text="@string/txt_title_name_roundDuration"
-            android:textSize="@dimen/textView_name_of_time"
-            android:layout_gravity="center"
-            android:layout_weight="1"/>
+            android:textSize="@dimen/textView_name_of_time" />
 
     <TextView
             android:id="@+id/time_main_roundDuration"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center|top"
+            android:layout_weight="3"
             android:inputType="time"
-            android:clickable="true"
-            android:focusable="true"
+            android:text="02:00"
             android:textSize="@dimen/textView_time_size"
-            style="@style/text_large"
-            tools:ignore="OnClick,SpUsage,TextViewEdits"
-            android:layout_weight="3"/>
+            tools:ignore="OnClick,SpUsage,TextViewEdits" />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
 
     <TextView
             android:id="@+id/txt_main_restDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_title_name_restDuration"
             android:layout_gravity="center"
-            android:textSize="@dimen/textView_name_of_time"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="@string/txt_title_name_restDuration"
+            android:textSize="@dimen/textView_name_of_time" />
 
     <TextView
             android:id="@+id/time_main_restDuration"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="3"
             android:inputType="time"
-            android:clickable="true"
-            android:focusable="true"
+            android:text="01:00"
             android:textSize="@dimen/textView_time_size"
-            style="@style/text_large"
-            tools:ignore="OnClick,SpUsage,TextViewEdits"
-            android:layout_weight="3"/>
+            tools:ignore="OnClick,SpUsage,TextViewEdits" />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
 
     <TextView
             android:id="@+id/txt_main_roundQuantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_title_name_roundQuantity"
             android:layout_gravity="center"
-            android:textSize="@dimen/textView_name_of_time"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="@string/txt_title_name_roundQuantity"
+            android:textSize="@dimen/textView_name_of_time" />
 
     <TextView
             android:id="@+id/time_main_roundQuantity"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="3"
             android:inputType="time"
-            android:clickable="true"
-            android:focusable="true"
+            android:text="8"
             android:textSize="@dimen/textView_time_size"
-            style="@style/text_large"
-            tools:ignore="OnClick,SpUsage,TextViewEdits"
-            android:layout_weight="3"/>
+            tools:ignore="OnClick,SpUsage,TextViewEdits" />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
 
     <TextView
             android:id="@+id/txt_main_training_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="@dimen/textView_name_of_time"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="Общее время: 23 мин"
+            android:textSize="@dimen/textView_name_of_time" />
 
     <Button
             android:id="@+id/button_main_start"
-            android:background="@drawable/button_start"
-            style="@style/text_large"
+            android:textStyle="bold"
+            android:textColor="@color/colorBold"
             android:layout_width="250dp"
             android:layout_height="70dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="3"
-            android:text="@string/main_button__start"
+            android:background="@drawable/button_start"
             android:gravity="center_horizontal|center_vertical"
+            android:text="@string/main_button__start"
             android:textSize="@dimen/textView_time_size"
             tools:ignore="SpUsage" />
+
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"/>
+            android:layout_weight="2" />
 
     <TextView
             android:id="@+id/txt_main_change_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/main_txt_timer_selection"
-            android:textSize="@dimen/textView_name_of_time"
-            android:gravity="center|bottom"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center|bottom"
+            android:text="@string/main_txt_timer_selection"
+            android:textSize="@dimen/textView_name_of_time" />
 
-    <Spinner
-            android:id="@+id/spinner_main_timer"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spinner_timer_name"
-            android:layout_weight="3"/>
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+        <ImageButton
+                android:id="@+id/imgBut_main_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@mipmap/settings" />
+
+        <Spinner
+                android:id="@+id/spinner_main_timer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="40dp" />
+    </LinearLayout>
+
+    <!--
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+        <Spinner
+                android:id="@+id/spinner_main_timer"
+                android:layout_width="320dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:layout_marginStart="30dp" />
+
+        <ImageButton
+                android:id="@+id/imgBut_main_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_marginEnd="0dp"
+                android:background="@null"
+                android:src="@mipmap/settings" />
+    </LinearLayout>
+    -->
+
+
 
 </LinearLayout>
+

@@ -5,6 +5,7 @@ import android.os.SystemClock
 import android.util.Log
 import by.itman.boxingtimer.utils.AdvancedCountDownTimer
 import by.itman.boxingtimer.models.TimerPresentation
+import by.itman.boxingtimer.utils.getRoundedSeconds
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.time.Duration
 import javax.inject.Inject
@@ -52,7 +53,7 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
     private fun startRunUp() {
         timerState = TimerState.REST
         timerObservers.forEach { observer -> observer.onRunUp(timer = actualTimer) }
-        countDownTimer = startTimer(actualTimer.getRunUp(), null)
+        countDownTimer = startTimer(actualTimer.getRunUp(), Duration.ofMillis(0))
         Log.i(tag, "timer runUp")
 
     }
@@ -62,30 +63,29 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
         timerObservers.forEach { observer ->
             observer.onRoundStart(roundNumber = currentRoundNumber)
         }
-        val noticeTime = (actualTimer.getNoticeOfEndRound().seconds).toInt()
-        val noticeOfEndInSec: Int? = if (noticeTime == 0) null else noticeTime
         countDownTimer = startTimer(
-            actualTimer.getRoundDuration(), noticeOfEndInSec)
+            actualTimer.getRoundDuration(), actualTimer.getNoticeOfEndRound())
         Log.i(tag, "timer startRound")
     }
 
     private fun startRest() {
         timerState = TimerState.REST
         timerObservers.forEach { observer -> observer.onRestStart() }
-        val noticeTime = (actualTimer.getNoticeOfEndRound().seconds).toInt()
-        val noticeOfEndInSec: Int? = if (noticeTime == 0) null else noticeTime
         countDownTimer = startTimer(
             actualTimer.getRestDuration(),
-            noticeOfEndInSec
+            actualTimer.getNoticeOfEndRound()
         )
         Log.i(tag, "timer startRest")
     }
 
-    private fun startTimer(millis: Duration, noticeOfEndInSec: Int?): AdvancedCountDownTimer {
+    private fun startTimer(millis: Duration, noticeOfEnd: Duration): AdvancedCountDownTimer {
         val t = SystemClock.elapsedRealtime()
         countDownTimer = object : AdvancedCountDownTimer(millis.toMillis(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                if ((millisUntilFinished/1000).toInt() == noticeOfEndInSec) startSoundNotice()
+                if (Duration.ofMillis(millisUntilFinished)
+                        .getRoundedSeconds() == noticeOfEnd.getRoundedSeconds()) {
+                    startSoundNotice()
+                }
                 if (millisUntilFinished >= 500L) {
                     timerObservers.forEach { observer ->
                         observer.onCountDownTick(Duration.ofMillis(millisUntilFinished))
@@ -102,7 +102,6 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
         return countDownTimer
     }
 
-    //todo fix bug with sound
     fun startSoundNotice() {
         when(timerState) {
             TimerState.ROUND -> {
@@ -150,5 +149,11 @@ class TimerManagerImpl @Inject constructor(@ApplicationContext val context: Cont
         currentRoundNumber = 1
         timerObservers.forEach { observer -> observer.onTimerFinished() }
         Log.i(tag,"finish")
+    }
+
+    override fun stop() {
+        countDownTimer.cancel()
+        timerObservers.forEach { observer -> observer.onTimerStopped() }
+        Log.i(tag,"stop")
     }
 }

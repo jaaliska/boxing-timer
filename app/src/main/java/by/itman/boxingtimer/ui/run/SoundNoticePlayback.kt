@@ -68,4 +68,8 @@ class SoundNoticePlayback @Inject constructor(
         Log.i(tag, "onTimerFinished")
         timerManager.unSubscribe(this)
     }
+
+    override fun onTimerStopped() {
+        timerManager.unSubscribe(this)
+    }
 }

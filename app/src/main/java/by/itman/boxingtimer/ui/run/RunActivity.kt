@@ -10,18 +10,17 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import by.itman.boxingtimer.R
+import by.itman.boxingtimer.ui.BaseActivity
 import by.itman.boxingtimer.utils.timerFormat
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.content_timer.*
 import java.time.Duration
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
+class RunActivity : BaseActivity(), RunView {
     @Inject
     lateinit var runPresenter: RunPresenter
     private lateinit var mTxtCurrentRound: TextView
@@ -64,13 +63,28 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
         mButResume.setOnClickListener{
             runPresenter.onTimerResume()
         }
+
+        if (appPreferences.getThemeResource() == R.style.MyDarkTheme) {
+            mButRestart.setImageResource(R.drawable.ic_restart_white)
+            mButRestart.setBackgroundResource(R.drawable.orange_dark_border)
+            mButResume.setImageResource(R.drawable.ic_play_white)
+            mButResume.setBackgroundResource(R.drawable.orange_dark_border)
+            mButPause.setImageResource(R.drawable.ic_pause_white)
+            mButPause.setBackgroundResource(R.drawable.orange_dark_border)
+        } else {
+            mButRestart.setImageResource(R.drawable.ic_restart_black)
+            mButRestart.setBackgroundResource(R.drawable.orange_lite_border)
+            mButResume.setImageResource(R.drawable.ic_play_black)
+            mButResume.setBackgroundResource(R.drawable.orange_lite_border)
+            mButPause.setImageResource(R.drawable.ic_pause_black)
+            mButPause.setBackgroundResource(R.drawable.orange_lite_border)
+        }
         updateButtons()
      }
 
     override fun setOnTickProgress(progress: Duration) {
         mTxtCountTime.text = progress.timerFormat()
-        //mProgressBar.progress = mProgressBar.max - progress.seconds.toInt()
-        mProgressBar.progress = progress.seconds.toInt()
+        mProgressBar.progress = mProgressBar.max - progress.seconds.toInt()
     }
 
     override fun setupRunUp(runUpDuration: Duration) {
@@ -145,6 +159,9 @@ class RunActivity : AppCompatActivity(), RunView { // ServiceConnection
         finish()
     }
 
+    override fun stopTraining() {
+        finish()
+    }
 
     override fun onPause() {
         Log.i("RunActivity", "onPause")

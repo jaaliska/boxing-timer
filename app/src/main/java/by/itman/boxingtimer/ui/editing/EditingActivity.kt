@@ -9,6 +9,7 @@ import by.itman.boxingtimer.utils.MyAlertDialogs
 import by.itman.boxingtimer.models.TimerSoundType
 import by.itman.boxingtimer.models.TimerField
 import by.itman.boxingtimer.models.TimerPresentation
+import by.itman.boxingtimer.ui.BaseActivity
 import by.itman.boxingtimer.utils.timerFormat
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Duration
@@ -16,7 +17,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class EditingActivity : AppCompatActivity(), EditingView {
+class EditingActivity : BaseActivity(), EditingView {
     private val fieldLayoutsMap: EnumMap<TimerField, View> = EnumMap(TimerField::class.java)
 
     @Inject

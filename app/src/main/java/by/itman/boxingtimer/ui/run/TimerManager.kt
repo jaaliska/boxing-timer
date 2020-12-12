@@ -10,5 +10,5 @@ interface TimerManager {
     fun resume()
     fun restart()
     fun finish()
-    //fun getState(roundState: String, roundCount: Int, roundNumber: Int)
+    fun stop()
 }

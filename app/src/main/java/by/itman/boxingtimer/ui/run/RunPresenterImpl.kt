@@ -60,7 +60,10 @@ class RunPresenterImpl
     override fun onExitByBackButton(context: Context) {
         myDialog.alertDialogForActionVerification(context = context,
             title = R.string.txt_run_dialog_exit,
-            consumer = { runView.finishTimer() }
+            consumer = {
+                runView.finishTimer()
+                timerManager.stop()
+            }
         )
     }
 
@@ -105,6 +108,10 @@ class RunPresenterImpl
 
         override fun onTimerFinished() {
             runView.finishTimer()
+        }
+
+        override fun onTimerStopped() {
+            runView.stopTraining()
         }
     }
 }

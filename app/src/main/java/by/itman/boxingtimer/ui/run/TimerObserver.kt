@@ -14,4 +14,5 @@ interface TimerObserver {
     fun onNoticeOfEndRest()
     fun onNoticeOfEndRound()
     fun onTimerFinished()
+    fun onTimerStopped()
 }

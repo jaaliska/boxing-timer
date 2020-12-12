@@ -1,13 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar" >
+    <style name="MyLightTheme" parent="Theme.AppCompat.Light.NoActionBar" >
         <!--<item name="colorPrimaryDark">@color/colorAccent</item>-->
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/colorPrimaryDark</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorBold</item>
         <!--<item name="android:textColorPrimary">@color/colorAccent</item>-->
-        <item name="android:buttonStyle">@style/button</item>
-        <item name="android:imageButtonStyle">@style/imageButton</item>
+        <item name="android:buttonStyle">@style/button_light</item>
+        <item name="android:imageButtonStyle">@style/imageButtonLight</item>
 
     </style>
 
@@ -16,20 +16,47 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="button">
+    <style name="spinner_light">
         <item name="android:textColor">@color/colorBold</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:background">@drawable/black_border</item>
+        <item name="android:background">@drawable/orange_border</item>
     </style>
 
-    <style name="imageButton">
-        <item name="android:background">@drawable/black_border</item>
+    <style name="spinner_dark">
+        <item name="android:textColor">@color/colorLight</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/orange_dark_border</item>
 
+    </style>
+
+    <style name="button_light">
+        <item name="android:background">@drawable/orange_lite_border</item>
+    </style>
+
+    <style name="button_dark">
+        <item name="android:background">@drawable/orange_dark_border</item>
+    </style>
+
+    <style name="imageButtonLight">
+        <item name="android:background">@drawable/orange_lite_border</item>
+    </style>
+
+    <style name="imageButtonDark">
+        <item name="android:background">@drawable/orange_dark_border</item>
     </style>
 
 
 
 
+    <style name="MyDarkTheme" parent="Theme.AppCompat.NoActionBar" >
+        <item name="colorAccent">@color/colorAccent</item>
+       <!-- <item name="android:spinnerStyle">@style/spinner_dark</item>
+        <item name="android:imageButtonStyle">@style/imageButtonDark</item>
+        -->
+        <item name="android:buttonStyle">@style/button_dark</item>
+        <item name="android:textColor">@color/colorLight</item>
 
+    </style>
 
 </resources>

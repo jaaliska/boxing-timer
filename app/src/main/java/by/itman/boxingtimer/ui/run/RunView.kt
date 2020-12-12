@@ -14,4 +14,5 @@ interface RunView {
     fun warnOfEndRound()
     fun warnOfEndRest()
     fun finishTimer()
+    fun stopTraining()
 }
