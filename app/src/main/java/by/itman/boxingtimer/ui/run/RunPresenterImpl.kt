@@ -2,10 +2,10 @@ package by.itman.boxingtimer.ui.run
 
 
 import android.content.Context
-import android.util.Log
 import by.itman.boxingtimer.R
 import by.itman.boxingtimer.data.TimerProvider
 import by.itman.boxingtimer.models.*
+import by.itman.boxingtimer.service.TimerService
 import by.itman.boxingtimer.utils.MyAlertDialogs
 import java.time.Duration
 import javax.inject.Inject
@@ -15,7 +15,7 @@ import kotlin.properties.Delegates
 class RunPresenterImpl
 @Inject constructor(
     private val timerProvider: TimerProvider,
-    private val timerManager: TimerManager,
+    private val timerService: TimerService,
     private val soundNoticePlayback: SoundNoticePlayback
 ) : RunPresenter {
 
@@ -33,28 +33,28 @@ class RunPresenterImpl
             ?: throw ExceptionInInitializerError("TimerModel with id $timerId return null")
         roundCount = actualTimer.roundQuantity
         currentRoundNumber = roundCount
-        timerManager.subscribe(TimerObserverForPresenter())
+        timerService.subscribe(TimerObserverForPresenter())
     }
 
     override fun runTimer() {
-        timerManager.subscribe(soundNoticePlayback)
-        timerManager.run(TimerPresentationImpl(actualTimer))
+        timerService.subscribe(soundNoticePlayback)
+        timerService.run(TimerPresentationImpl(actualTimer))
     }
 
     override fun onTimerPause() {
-        timerManager.pause()
+        timerService.pause()
     }
 
     override fun onTimerResume() {
-        timerManager.resume()
+        timerService.resume()
     }
 
     override fun onTimerRestart() {
-        timerManager.restart()
+        timerService.restart()
     }
 
     override fun onTimerFinished() {
-        timerManager.finish()
+        timerService.finish()
     }
 
     override fun onExitByBackButton(context: Context) {
@@ -62,7 +62,7 @@ class RunPresenterImpl
             title = R.string.txt_run_dialog_exit,
             consumer = {
                 runView.finishTimer()
-                timerManager.stop()
+                timerService.stop()
             }
         )
     }

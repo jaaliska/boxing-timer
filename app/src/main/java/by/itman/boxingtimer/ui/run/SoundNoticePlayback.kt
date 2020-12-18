@@ -5,13 +5,14 @@ import android.media.MediaPlayer
 import android.util.Log
 import by.itman.boxingtimer.models.TimerPresentation
 import by.itman.boxingtimer.models.TimerSoundType
+import by.itman.boxingtimer.service.TimerService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.time.Duration
 import javax.inject.Inject
 
 
 class SoundNoticePlayback @Inject constructor(
-    @ApplicationContext val context: Context, private val timerManager: TimerManager
+    @ApplicationContext val context: Context, private val timerService: TimerService
     ) : TimerObserver {
 
     private lateinit var actualTimer: TimerPresentation
@@ -66,10 +67,10 @@ class SoundNoticePlayback @Inject constructor(
     override fun onTimerFinished() {
         play(actualTimer.getSoundTypeOfStartRest())
         Log.i(tag, "onTimerFinished")
-        timerManager.unSubscribe(this)
+        timerService.unSubscribe(this)
     }
 
     override fun onTimerStopped() {
-        timerManager.unSubscribe(this)
+        timerService.unSubscribe(this)
     }
 }

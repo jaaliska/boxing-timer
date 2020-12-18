@@ -1,54 +1,141 @@
 package by.itman.boxingtimer.service
 
-import android.app.Service
 import android.content.Context
-import android.content.Intent
-import android.os.Build
-import android.os.CountDownTimer
-import android.os.IBinder
-import androidx.annotation.RequiresApi
+import android.os.SystemClock
+import android.util.Log
+import by.itman.boxingtimer.utils.AdvancedCountDownTimer
+import by.itman.boxingtimer.models.TimerPresentation
 import by.itman.boxingtimer.ui.run.TimerObserver
-import by.itman.boxingtimer.models.TimerPresentationImpl
+import by.itman.boxingtimer.ui.run.TimerState
+import by.itman.boxingtimer.utils.getRoundedSeconds
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.time.Duration
+import javax.inject.Inject
+import javax.inject.Singleton
+import kotlin.properties.Delegates
+
+@Singleton
+class TimerServiceImpl @Inject constructor(@ApplicationContext val context: Context) :
+    TimerService {
+
+    private val tag = "TimerManager"
+    private lateinit var countDownTimer: AdvancedCountDownTimer
+    private val timerObservers = mutableListOf<TimerObserver>()
+    private lateinit var actualTimer: TimerPresentation
+    private var timerState = TimerState.RUN_UP
+    private var isTimerPaused: Boolean = false
+    private var roundCount by Delegates.notNull<Int>()
+    private var currentRoundNumber = 1
 
 
-var serviceInstance: TimerServiceImpl? = null
-
-fun startInstance(context: Context) {
-    if (serviceInstance == null) {
-        context.startService(Intent(context, TimerServiceImpl::class.java))
+    override fun run(timer: TimerPresentation) {
+        actualTimer = timer
+        roundCount = actualTimer.getRoundQuantity()
+        Log.i(tag,"timer run")
+        startRunUp()
     }
-}
 
-val timerObservers = mutableListOf<TimerObserver>()
+    private fun getNextDuration() {
+        if (currentRoundNumber < roundCount) {
+            if (timerState != TimerState.ROUND) {
+                startRound()
+            } else if (timerState != TimerState.REST) {
+                startRest()
+                currentRoundNumber += 1
+            }
+        } else if (currentRoundNumber == roundCount) {
+            startRound()
+            currentRoundNumber += 1
+        } else {
+            timerObservers.forEach { observer -> observer.onTimerFinished() }
+            currentRoundNumber = 1
+        }
+    }
 
-class TimerServiceImpl: Service(), TimerService {
-//  interface, strategy, timerManager
+    private fun startRunUp() {
+        timerState = TimerState.REST
+        timerObservers.forEach { observer -> observer.onRunUp(timer = actualTimer) }
+        countDownTimer = startTimer(actualTimer.getRunUp(), Duration.ofMillis(0))
+        Log.i(tag, "timer runUp")
 
-    private lateinit var countDownTimer: CountDownTimer
-    private lateinit var timer: TimerPresentationImpl
+    }
 
+    private fun startRound() {
+        timerState = TimerState.ROUND
+        timerObservers.forEach { observer ->
+            observer.onRoundStart(roundNumber = currentRoundNumber)
+        }
+        countDownTimer = startTimer(
+            actualTimer.getRoundDuration(), actualTimer.getNoticeOfEndRound())
+        Log.i(tag, "timer startRound")
+    }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        serviceInstance = this
-        //timer =
-        countDownTimer = object: CountDownTimer(10000, 100) {
-            @RequiresApi(Build.VERSION_CODES.O)
+    private fun startRest() {
+        timerState = TimerState.REST
+        timerObservers.forEach { observer -> observer.onRestStart() }
+        countDownTimer = startTimer(
+            actualTimer.getRestDuration(),
+            actualTimer.getNoticeOfEndRound()
+        )
+        Log.i(tag, "timer startRest")
+    }
+
+    private fun startTimer(millis: Duration, noticeOfEnd: Duration): AdvancedCountDownTimer {
+        val t = SystemClock.elapsedRealtime()
+        countDownTimer = object : AdvancedCountDownTimer(millis.toMillis(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                for (observer in timerObservers) {
-                    observer.onCountDownTick(Duration.ofMillis(millisUntilFinished))
+                if (Duration.ofMillis(millisUntilFinished)
+                        .getRoundedSeconds() == noticeOfEnd.getRoundedSeconds()) {
+                    startSoundNotice()
+                }
+                if (millisUntilFinished >= 500L) {
+                    timerObservers.forEach { observer ->
+                        observer.onCountDownTick(Duration.ofMillis(millisUntilFinished))
+                    }
+                    Log.i("$tag timer going", millisUntilFinished.toString())
                 }
             }
+
             override fun onFinish() {
-                serviceInstance = null
-                stopSelf()
+                getNextDuration()
+                Log.i("$tag timer finish", (SystemClock.elapsedRealtime() - t).toString())
             }
         }.start()
+        return countDownTimer
+    }
 
-        return super.onStartCommand(intent, flags, startId)
+    fun startSoundNotice() {
+        when(timerState) {
+            TimerState.ROUND -> {
+                timerObservers.forEach { observer -> observer.onNoticeOfEndRound() }
+                Log.i(tag, "onNoticeAboutToEndRound")
+            }
+            TimerState.REST -> {
+                timerObservers.forEach { observer -> observer.onNoticeOfEndRest() }
+                Log.i(tag, "onNoticeAboutToEndRest")
+            }
+            else -> {}
+        }
     }
 
 
+    override fun pause() {
+        isTimerPaused = true
+        countDownTimer.pause()
+        timerObservers.forEach { observer -> observer.onPauseTimer() }
+    }
+
+    override fun resume() {
+        isTimerPaused = false
+        countDownTimer.resume()
+        timerObservers.forEach { observer -> observer.onResumeTimer() }
+    }
+
+    override fun restart() {
+        isTimerPaused = false
+        countDownTimer.restart()
+        timerObservers.forEach { observer -> observer.onRestartTimer() }
+    }
 
     override fun subscribe(timerObserver: TimerObserver) {
         timerObservers.add(timerObserver)
@@ -59,11 +146,16 @@ class TimerServiceImpl: Service(), TimerService {
     }
 
 
-    override fun onBind(p0: Intent?): IBinder? {
-        return null
+    override fun finish() {
+        countDownTimer.cancel()
+        currentRoundNumber = 1
+        timerObservers.forEach { observer -> observer.onTimerFinished() }
+        Log.i(tag,"finish")
+    }
+
+    override fun stop() {
+        countDownTimer.cancel()
+        timerObservers.forEach { observer -> observer.onTimerStopped() }
+        Log.i(tag,"stop")
     }
 }
-
-
-
-

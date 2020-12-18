@@ -6,6 +6,8 @@ import by.itman.boxingtimer.ui.editing.EditingPresenter
 import by.itman.boxingtimer.ui.editing.EditingPresenterImpl
 import by.itman.boxingtimer.data.PrefsTimerProvider
 import by.itman.boxingtimer.data.TimerProvider
+import by.itman.boxingtimer.service.TimerService
+import by.itman.boxingtimer.service.TimerServiceImpl
 import by.itman.boxingtimer.ui.main.MainPresenter
 import by.itman.boxingtimer.ui.main.MainPresenterImpl
 import by.itman.boxingtimer.ui.run.*
@@ -41,7 +43,7 @@ abstract class AbstractAppModule {
 
     @Singleton
     @Binds
-    abstract fun bindsTimerManager(timerManager: TimerManagerImpl): TimerManager
+    abstract fun bindsTimerManager(timerManager: TimerServiceImpl): TimerService
 }
 
 @InstallIn(ApplicationComponent::class)

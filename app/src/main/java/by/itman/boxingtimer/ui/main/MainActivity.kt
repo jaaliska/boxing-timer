@@ -39,7 +39,6 @@ class MainActivity: BaseActivity(), MainView {
         initFields()
         setOnClickListeners()
         mainPresenter.setSpinner(this, spinner)
-
     }
 
     private fun initFields() {
