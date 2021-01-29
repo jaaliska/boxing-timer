@@ -16,7 +16,7 @@
 - Data storage is handled by Shared Preferences
 </td>
     <td>
-  <img src="gif_for_redme.gif" width="200" height="400"></td>
+  <img src="gif_for_redme.gif" width="200" height="390"></td>
  </tr>
 </table>
 
